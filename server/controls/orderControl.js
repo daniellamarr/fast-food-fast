@@ -9,7 +9,7 @@ class orderControl {
         
         const qty1 = req.body.quantity;
         const qty2 = qty1.split(",");
-
+        
         const qCheck = qty2.every(validate.checkValidity);
         const oCheck = ord2.every(validate.checkValidity);
         if (qCheck != true || oCheck != true) {
@@ -40,6 +40,10 @@ class orderControl {
             orders.push(order);
             resp.send(order);
         }
+    }
+
+    static getAllOrders(req,resp) {
+        resp.send(orders);
     }
 }
 
