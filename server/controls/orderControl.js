@@ -38,12 +38,33 @@ class orderControl {
                 quantity: qty2
             };
             orders.push(order);
-            resp.send(order);
+            resp.send({
+                status: 'success',
+                message: 'New order inserted',
+                order: order
+            });
         }
     }
 
     static getAllOrders(req,resp) {
-        resp.send(orders);
+        resp.send({
+            status: 'success',
+            message: 'Returning all orders',
+            orders: orders
+        });
+    }
+
+    static getOneOrder(req,resp) {
+        const order = orders.find(c => c.id === parseInt(req.params.id));
+        if (!order) resp.status(404).send({
+            status: 'error',
+            message: 'This order was not found on the list'
+        });
+        resp.send({
+            status: 'success',
+            message: 'Returning 1 order',
+            order: order
+        });
     }
 }
 
