@@ -1,0 +1,40 @@
+{
+  "name": "fast-food-fast",
+  "version": "1.0.0",
+  "description": "A fast food delivery service app for a restaurant",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node -- ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniellamarr/fast-food-fast.git"
+  },
+  "keywords": [
+    "Andela",
+    "Developer",
+    "Challenge",
+    "FastFood",
+    "Restaurant"
+  ],
+  "author": "Daniel Lamarr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniellamarr/fast-food-fast/issues"
+  },
+  "homepage": "https://github.com/daniellamarr/fast-food-fast#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.18.4"
+  }
+}
