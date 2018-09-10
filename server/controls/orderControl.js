@@ -57,15 +57,18 @@ class orderControl {
 
     static getOneOrder(req,resp) {
         const order = orders.find(c => c.id === parseInt(req.params.id));
-        if (!order) resp.status(404).send({
-            status: 'error',
-            message: 'This order was not found on the list'
-        });
-        resp.send({
-            status: 'success',
-            message: 'Returning 1 order',
-            order: order
-        });
+        if (!order) {
+            resp.status(404).send({
+                status: 'error',
+                message: 'This order was not found on the list'
+            });
+        }else{
+            resp.send({
+                status: 'success',
+                message: 'Returning 1 order',
+                order: order
+            });
+        }
     }
 
     static updateOrderStatus(req,resp) {
