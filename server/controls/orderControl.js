@@ -35,7 +35,8 @@ class orderControl {
             const order = {
                 id: orders.length + 1,
                 order: ord2,
-                quantity: qty2
+                quantity: qty2,
+                status: false
             };
             orders.push(order);
             resp.send({
@@ -63,6 +64,26 @@ class orderControl {
         resp.send({
             status: 'success',
             message: 'Returning 1 order',
+            order: order
+        });
+    }
+
+    static updateOrderStatus(req,resp) {
+        const order = orders.find(c => c.id === parseInt(req.params.id));
+        if (!order) resp.status(404).send({
+            status: 'error',
+            message: 'This order was not found on the list'
+        });
+        let stat = order.status;
+        if (stat===false) {
+            stat = true;
+        }else if (stat===true) {
+            stat = false;
+        }
+        order.status = stat;
+        resp.send({
+            status: 'success',
+            message: 'Order status has been changed',
             order: order
         });
     }
