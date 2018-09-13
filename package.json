@@ -4,7 +4,7 @@
   "description": "A fast food delivery service app for a restaurant",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node -- ./index.js",
+    "start": "babel-node ./index.js --exec babel-node",
     "test": "nyc mocha --require babel-core/register",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
