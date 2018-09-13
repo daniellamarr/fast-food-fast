@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Muli|Playfair+Display" rel="stylesheet">
+    <link rel="stylesheet" href="css/themify-icons.css">
 </head>
 <body>
     <section id="container">
@@ -18,47 +19,24 @@
                 <ul>
                     <li><a href="login.html">Login</a></li>
                     <li><a href="signup.html">Sign Up</a></li>
+                    <a href="javascript:;" class="menu"><i class="ti ti-menu"></i></a>
                 </ul>
             </nav>
         </header>
         <section id="order">
             <div class="title">
                 <h1>Place an Order</h1>
-                <button>Order Now</button>
             </div>
-        </section>
-        <section id="foods">
-            <div class="title">
-                <h2>Foods</h2><hr class="div">
-            </div>
-            <div class="item">
-                <img src="images/2.jpeg" alt="">
-                <div class="item-text">
-                    <a href="">Hamburger</a>
-                </div>
-            </div>
-            <div class="item">
-                <img src="images/2.jpeg" alt="">
-                <div class="item-text">
-                    <a href="">Hamburger</a>
-                </div>
-            </div>
-            <div class="item">
-                <img src="images/2.jpeg" alt="">
-                <div class="item-text">
-                    <a href="">Hamburger</a>
-                </div>
-            </div>
-            <div class="clear"></div>
         </section>
         <section id="placeorder">
             <center>
-                <div class="login">
-                    <h4>Please input your contact info</h4>
+                <div class="placeorder">
+                    <h2>Place your Order</h2>
                     <form action="" method="post">
                         <input type="text" name="user" id="user" placeholder="Your Name">
                         <input type="text" name="email" id="email" placeholder="Your Email">
                         <input type="tel" name="phone" id="phone" placeholder="Your Number">
+                        <textarea name="foodorder" id="foodorder" cols="30" rows="10" placeholder="What would you like to have ?"></textarea>
                         <button>Order </button>
                     </form>
                 </div>

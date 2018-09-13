@@ -4,7 +4,7 @@
     font-family: 'Muli', sans-serif;
 }
 
-a:focus, button:focus, input:focus {
+a:focus, button:focus, input:focus, textarea:focus {
     outline: none;
 }
 
@@ -73,6 +73,10 @@ nav {
 nav ul li {
     display: inline;
     padding-right: 40px;
+}
+
+.menu {
+    display: none;
 }
 
 #home {
@@ -190,13 +194,37 @@ nav ul li {
 }
 
 #placeorder {
-    background-image: url(../images/3.jpeg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-blend-mode: multiply;
-    background-color: rgba(0, 0, 0, .6);
     padding: 50px;
+}
+
+#placeorder input {
+    color: #aaa !important;
+}
+
+#placeorder textarea {
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    padding-right: 0;
+    margin-bottom: 20px;
+    border: 1px solid chocolate;
+    color: #aaa;
+    transition: 0.3s all;
+    resize: none;
+}
+
+.placeorder {
+    width: 500px;
+}
+
+.placeorder h2 {
+    margin-bottom: 10px;
+    color: #aaa;
 }
 
 /** Profile **/
@@ -229,6 +257,38 @@ nav ul li {
 
 #recentorders {
     padding: 50px;
+}
+
+#myorders {
+    padding: 50px;
+}
+
+table {
+    margin-top: 50px;
+    width: 100%;
+}
+
+.table {
+    overflow: auto;
+}
+
+table thead {
+    background-color: chocolate;
+    color: #fff;
+}
+
+table thead th {
+    padding: 15px;
+}
+
+table tbody {
+    text-align: center;
+}
+
+table tbody tr td {
+    background-color: #aaa;
+    padding: 15px;
+    color: #fff;
 }
 
 /** Login **/
@@ -276,4 +336,68 @@ footer {
     background-color: chocolate;
     padding: 20px;
     text-align: center;
+}
+
+/** Responsive **/
+
+@media (max-width: 500px) {
+    header, header.hbg {
+        background-color: chocolate;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding: 10px;
+    }
+    
+    header a:hover, header.hbg a:hover {
+        color: #fff;
+    }
+    
+    header .logo, header.hbg .logo {
+        color: #fff;
+        margin-left: 10px;
+    }
+    
+    nav ul li {
+        display: none;
+    }
+
+    .menu {
+        display: block;
+        padding-right: 30px;
+    }
+    
+    #home {
+        height: 250px;
+    }
+
+    #home .title, #order .title {
+        padding-top: 100px;
+    }
+    
+    #home .title h1, #order .title h1 {
+        font-size: 35px;
+    }
+
+    #foods .item {
+        width: 100%;
+        margin-top: 30px;
+        float: none;
+    }
+
+    #loginPage {
+        background-image: none;
+    }
+
+    .login {
+        width: 100%;
+    }
+
+    #login input, #placeorder input {
+        width: 80%;
+    }
+
+    #placeorder {
+        padding: 10px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
 }
