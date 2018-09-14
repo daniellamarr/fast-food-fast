@@ -1,0 +1,23 @@
+{
+   "extends":"airbnb-base",
+    "parserOptions":{
+        "ecmaVersion":6,
+        "linebreak-style": [true, "CRLF"]
+    },
+    "env":{
+        "node":true,
+        "browser": true,
+        "es6":true,
+        "mocha":true
+    },
+    "rules": {
+        "global-require": 0,
+        "linebreak-style": [0, "error", "windows"],
+        "no-param-reassign":"off",
+        "max-len":[2,80,4],
+        "mocha/no-exclusive-tests": "error"
+    },
+    "plugins": [
+        "mocha"
+    ]
+}

@@ -5,11 +5,11 @@ import Route from './server/routes/route';
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.send('Andela 21 Project - Fast-Food-Fast');
-})
+  res.send('Andela 21 Project - Fast-Food-Fast');
+});
 
 Route(app);
 
