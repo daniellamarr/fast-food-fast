@@ -37,15 +37,15 @@ Npm v5.6 or above
 ### Installing
 
 ## On your Local Machine
-- Pull the **develop** branch off this repository
-- Run **npm install** to install all dependencies
+- Pull the [develop](https://github.com/daniellamarr/fast-food-fast) branch off this repository
+- Run `npm install` to install all dependencies
 - Run npm start to start the app
 - App runs on port 6060
 - Access endpoints on **localhost:6060**
 ## On Heroku
-- Pull the **develop** branch off this repository
-- Run **npm install** to install all dependencies
-- Access endpoints on **daniellamarr-fast-food-fast.herokuapp.com**
+- Pull the [develop](https://github.com/daniellamarr/fast-food-fast) branch off this repository
+- Run `npm install` to install all dependencies
+- Access endpoints on [daniellamarr-fast-food-fast.herokuapp.com](https://daniellamarr-fast-food-fast.herokuapp.com)
 
 ## Running the tests
 
@@ -59,7 +59,7 @@ Run `npm test` in the terminal for the cloned folder.
 ### Deployment on Heroku Server
 
 - Create an account on Heroku.
-- Select **ch-deploy-application-heroku-160469940** to deploy on.
+- Select [ch-deploy-application-heroku-160469940](https://github.com/daniellamarr/fast-food-fast/tree/ch-deploy-application-heroku-160469940) to deploy on.
 - Run **heroku push ch-deploy-application-heroku-160469940:master** to deploy
 
 
@@ -71,10 +71,8 @@ Run `npm test` in the terminal for the cloned folder.
 
 * **Daniel Anyaegbu**
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
 ## Acknowledgments
 
-* medium.freecodecamp.org
+* [medium.freecodecamp.org](https://medium.freecodecamp.org)
 * The Andela Team
-* google.com
+* [google.com](https://google.com)
