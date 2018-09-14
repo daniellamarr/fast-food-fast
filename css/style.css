@@ -75,6 +75,10 @@ nav ul li {
     padding-right: 40px;
 }
 
+.hide {
+    display: none;
+}
+
 .menu {
     display: none;
 }
@@ -296,6 +300,10 @@ table tbody tr td {
     padding-top: 100px;
 }
 
+.logged {
+    padding-bottom: 160px;
+}
+
 .login {
     width: 400px;
     color: #fff;
@@ -356,8 +364,31 @@ footer {
         margin-left: 10px;
     }
     
-    nav ul li {
+    nav > ul > li {
         display: none;
+    }
+
+    .dropdown {
+        background-color: #fff;
+        position: absolute;
+        width: 100%;
+        top: 50px;
+        left: 0;
+        padding: 10px;
+    }
+
+    .dropdown ul li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .dropdown ul li:first-child {
+        padding-bottom: 5px;
+    }
+
+    .dropdown ul li a {
+        color: chocolate;
+        font-size: 18px;
     }
 
     .menu {
@@ -391,7 +422,7 @@ footer {
         width: 100%;
     }
 
-    #login input, #placeorder input {
+    #login input, #placeorder input, #placeorder textarea {
         width: 80%;
     }
 
@@ -399,5 +430,10 @@ footer {
         padding: 10px;
         padding-top: 30px;
         padding-bottom: 30px;
+    }
+
+
+    .placeorder {
+        width: 100%;
     }
 }

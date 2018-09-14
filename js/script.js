@@ -5,3 +5,5 @@ window.onscroll = () => {
         document.getElementById("home-header").className = "";
     }
 }
+
+document.getElementById('toggle').onclick = () => document.getElementById('dropdown').classList.toggle('hide');
