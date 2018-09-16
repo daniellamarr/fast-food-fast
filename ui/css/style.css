@@ -115,16 +115,58 @@ nav ul li {
     margin-top: 5px;
 }
 
+.cart-div {
+    position: absolute;
+    background-color: #fff;
+    margin-top: 20px;
+    right: 200px;
+    width: 200px;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.cart-details li a {
+    font-size: 16px;
+    color: chocolate;
+}
+
+.cart-details li a:hover {
+    font-size: 16px;
+    color: rgb(160, 69, 4);
+}
+
+.cart-details li {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 0;
+    border-bottom: 1px dotted #aaa;
+    margin-bottom: 5px;
+}
+
+.cart-details img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    float: left;
+    padding-right: 20px;
+}
+
+.cart-title {
+    font-weight: bold;
+}
+
 #foods {
     padding: 50px;
 }
 
 #foods .item {
-    width: 30%;
+    width: 18%;
     background-color: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin-top: 30px;
-    margin-right: 3.3%;
+    margin-right: 2%;
     float: left;
 }
 
@@ -142,10 +184,15 @@ nav ul li {
 #foods .item .item-text {
     text-align: center;
     padding: 10px 20px;
+    margin-bottom: 4px;
 }
 
 #foods .item .item-text a {
     color: #000;
+}
+
+.item .price-tag {
+    text-align: center;
 }
 
 .clear {

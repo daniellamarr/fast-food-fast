@@ -7,3 +7,6 @@ window.onscroll = () => {
 }
 
 document.getElementById('toggle').onclick = () => document.getElementById('dropdown').classList.toggle('hide');
+
+
+document.getElementById('shoppingcart-b').onclick = () => document.getElementById('shoppingcart').classList.toggle('hide');
