@@ -63,10 +63,47 @@ describe('/POST /api/v1/orders', () => {
         });
     });
 
-    it('it should fail with a 400 error', (done) => {
+    it('it should fail with a 400 error if order is more than quantity', (done) => {
+    const items = {
+        order:"Eba,Amala",
+        quantity: "1",
+        status: false
+    }
     request(server)
         .post('/api/v1/orders')
-        .send(test_order_fail)
+        .send(items)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should fail with a 400 error when a field is incomplete', (done) => {
+    const items = {
+        order:"Eba,Amala",
+        quantity: "1,",
+        status: false
+    }
+    request(server)
+        .post('/api/v1/orders')
+        .send(items)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should fail with a 400 error when length of quantity is greater', (done) => {
+    const items = {
+        order:"Eba,Amala",
+        quantity: "1,2,5,6",
+        status: false
+    }
+    request(server)
+        .post('/api/v1/orders')
+        .send(items)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -76,11 +113,31 @@ describe('/POST /api/v1/orders', () => {
 });
 
 describe('/POST /api/v1/orders', () => {
-    it('it should update an order status', (done) => {
+    it('it should update an order status to true if false', (done) => {
     request(server)
         .put('/api/v1/orders/' + 1)
         .end((err, res) => {
             res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should update an order status to false if true', (done) => {
+    request(server)
+        .put('/api/v1/orders/' + 1)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 404 error if id does not exist', (done) => {
+    request(server)
+        .put('/api/v1/orders/ryiy8iby')
+        .end((err, res) => {
+            res.should.have.status(404);
             res.body.should.be.a('object');
             done();
         });
