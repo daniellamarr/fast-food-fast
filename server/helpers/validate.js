@@ -1,7 +1,10 @@
 class validate {
-    static checkValidity (el)
+    static getSum(total, num) {
+        return total + num;
+    }
+    static sumPrices (price)
     {
-        return el != "";
+        return price.reduce(this.getSum)
     }
 }
 

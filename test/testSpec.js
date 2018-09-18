@@ -5,16 +5,18 @@ let should = _should();
 
 use(chaiHttp);
 
-let test_order = {
-    order:"Icecream,Pizza,Shawarma",
-    quantity:"10,8,4",
-    status: false
-}
-
 let test_order_fail = {
-    order:"",
-    quantity:"10,8,4",
-    status: false
+    "menu": [
+		{
+			"quantity":2,
+			"price":100
+		},
+		{
+			"order":"Pizza",
+			"quantity":5,
+			"price":1000
+		}
+	]
 }
 
 describe('/GET /api/v1/orders', () => {
@@ -53,25 +55,47 @@ describe('/GET /api/v1/orders/:id', () => {
 
 describe('/POST /api/v1/orders', () => {
     it('it should place an order', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"Shawarma",
+                "quantity":2,
+                "price":2000
+            },
+            {
+                "order":"Pizza",
+                "quantity":5,
+                "price":1000
+            }
+        ]
+    }
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
         .end((err, res) => {
-            res.should.have.status(200);
+            res.should.have.status(201);
             res.body.should.be.a('object');
             done();
         });
     });
 
-    it('it should fail with a 400 error if order is more than quantity', (done) => {
-    const items = {
-        order:"Eba,Amala",
-        quantity: "1",
-        status: false
+    it('it should return a 400 error status if order parameter does not exist', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "quantity":2,
+                "price":2000
+            },
+            {
+                "order":"Pizza",
+                "quantity":5,
+                "price":1000
+            }
+        ]
     }
     request(server)
         .post('/api/v1/orders')
-        .send(items)
+        .send(test_order)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -79,15 +103,23 @@ describe('/POST /api/v1/orders', () => {
         });
     });
 
-    it('it should fail with a 400 error when a field is incomplete', (done) => {
-    const items = {
-        order:"Eba,Amala",
-        quantity: "1,",
-        status: false
+    it('it should return a 400 error status when quantity parameter does not exist', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"Shawarma",
+                "quantity":4,
+                "price":2000
+            },
+            {
+                "order":"Pizza",
+                "price":1000
+            }
+        ]
     }
     request(server)
         .post('/api/v1/orders')
-        .send(items)
+        .send(test_order)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -95,15 +127,73 @@ describe('/POST /api/v1/orders', () => {
         });
     });
 
-    it('it should fail with a 400 error when length of quantity is greater', (done) => {
-    const items = {
-        order:"Eba,Amala",
-        quantity: "1,2,5,6",
-        status: false
+    it('it should return a 400 error status when price parameter does not exist', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"Shawarma",
+                "quantity":2
+            },
+            {
+                "order":"Pizza",
+                "quantity":5,
+                "price":1000
+            }
+        ]
     }
     request(server)
         .post('/api/v1/orders')
-        .send(items)
+        .send(test_order)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+    
+    it('it should return a 400 error status when quantity parameter is not a number', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"Shawarma",
+                "quantity":"2",
+                "price":2000
+            },
+            {
+                "order":"Pizza",
+                "quantity":5,
+                "price":1000
+            }
+        ]
+    }
+    request(server)
+        .post('/api/v1/orders')
+        .send(test_order)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 400 error status when price parameter is not a number', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"Shawarma",
+                "quantity":2,
+                "price":2000
+            },
+            {
+                "order":"Pizza",
+                "quantity":5,
+                "price":"1000"
+            }
+        ]
+    }
+    request(server)
+        .post('/api/v1/orders')
+        .send(test_order)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
