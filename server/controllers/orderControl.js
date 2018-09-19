@@ -11,6 +11,11 @@ class orderControl {
                     status:"error",
                     message:"Please fill in your order"
                 })
+            }else if (validate.hasWhiteSpace(menu[i].order)) {
+                return resp.status(400).send({
+                    status:"error",
+                    message:"Please fill in your order"
+                })
             }else if (menu[i].quantity=="" || menu[i].quantity==null) {
                 return resp.status(400).send({
                     status:"error",
@@ -50,7 +55,7 @@ class orderControl {
             status: "pending"
         };
         orders.push(placeorder);
-        resp.status(201).send({
+        return resp.status(201).send({
             status: "success",
             message: "Order placed successfully",
             orders: placeorder
@@ -58,7 +63,7 @@ class orderControl {
     };
 
     static getAllOrders(req,resp) {
-        resp.send({
+        return resp.send({
             status: 'success',
             message: 'Returning all orders',
             orders: orders
@@ -66,35 +71,49 @@ class orderControl {
     }
 
     static getOneOrder(req,resp) {
-        const order = orders.find(c => c.id === parseInt(req.params.id));
+        const order = orders.find(c => c.id == req.params.id);
         if (!order) {
-            resp.status(404).send({
+            return resp.status(404).send({
                 status: 'error',
                 message: 'This order was not found on the list'
             });
         }else{
-            resp.send({
+            return resp.send({
                 status: 'success',
-                message: 'Returning 1 order',
+                message: 'Returned one order',
                 order: order
             });
         }
     }
 
     static updateOrderStatus(req,resp) {
-        const order = orders.find(c => c.id === parseInt(req.params.id));
-        if (!order) resp.status(404).send({
-            status: 'error',
-            message: 'This order was not found on the list'
-        });
-        let stat = order.status;
-        if (stat===false) {
-            stat = true;
-        }else if (stat===true) {
-            stat = false;
+        const status = req.body.status;
+        const statusArray = ['pending','accepted','rejected','completed'];
+        const order = orders.find(c => c.id == req.params.id);
+        if (!order) {
+            return resp.status(404).send({
+                status: 'error',
+                message: 'This order was not found on the list'
+            });
         }
-        order.status = stat;
-        resp.send({
+        if (status==="" || status==null){
+            return resp.status(400).send({
+                status: 'error',
+                message: 'Status field cannot be left empty'
+            });
+        }else if (validate.hasWhiteSpace(status) != false) {
+            return resp.status(400).send({
+                status: 'error',
+                message: 'No whitespaces allowed'
+            });
+        }else if (statusArray.includes(status) != true) {
+            return resp.status(400).send({
+                status: 'error',
+                message: 'The status you entered is invalid'
+            });
+        }
+        order.status = status;
+        return resp.send({
             status: 'success',
             message: 'Order status has been changed',
             order: order
