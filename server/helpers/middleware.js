@@ -3,7 +3,7 @@ import validate from "../helpers/validate";
 class Middleware {
     static validatePlaceOrder (req,resp,next) {
         const {menu} = req.body;
-        if (menu==null) {
+        if (menu==null || menu.length == 0) {
             return resp.status(400).send({
                 status:"error",
                 message:"Your request object cannot be left empty"
