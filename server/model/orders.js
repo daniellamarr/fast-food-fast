@@ -6,7 +6,7 @@ const orders = [
             {id:2,order:"Shawarma",quantity:4,price:4000},
             {id:3,order:"Pizza",quantity:1,price:1000}
         ],
-        total: 7000,
+        total: 21000,
         status: "pending"
     }
 ]

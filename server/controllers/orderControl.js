@@ -41,7 +41,8 @@ class orderControl {
         }
         let prices = []
         for (let j = 0; j < place.length; j++) {
-            prices.push(place[j].price);
+            const sum = place[j].price * place[j].quantity;
+            prices.push(sum);
         }
         const placeorder = {
             id: orders.length + 1,

@@ -2,7 +2,7 @@ class validate {
     static getSum(total, num) {
         return total + num;
     }
-    static sumPrices (price)
+    static sumPrices (price,quantity)
     {
         return price.reduce(this.getSum)
     }

@@ -1,5 +1,4 @@
 import orderControl from "../controllers/orderControl";
-// import Middleware from "../helpers/middleware";
 
 const Route = (app) => {
 
