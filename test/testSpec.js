@@ -65,6 +65,18 @@ describe('/POST /api/v1/orders', () => {
         });
     });
 
+    it('it should return a 400 error status if req.body object is null', (done) => {
+    const test_order = {}
+    request(server)
+        .post('/api/v1/orders')
+        .send(test_order)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
     it('it should return a 400 error status if order parameter does not exist', (done) => {
     const test_order = {
         "menu": [
