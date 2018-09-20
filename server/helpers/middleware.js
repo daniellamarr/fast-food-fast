@@ -1,4 +1,5 @@
 import validate from "../helpers/validate";
+import orders from "../model/orders";
 
 class Middleware {
     static validatePlaceOrder (req,resp,next) {
@@ -50,6 +51,52 @@ class Middleware {
             });
         }
         req.place = place;
+        next();
+    }
+
+    static validateGetOneOrder (req,resp,next) {
+        const order = orders.find(c => c.id == req.params.id);
+        if (!order) {
+            return resp.status(404).send({
+                status: 'error',
+                message: 'This order was not found on the list'
+            });
+        }
+        req.order = order;
+
+        next();
+    }
+
+    static validateUpdateOrderStatus (req,resp,next) {
+        const status = req.body.status;
+        const statusArray = ['pending','accepted','rejected','completed'];
+        const order = orders.find(c => c.id == req.params.id);
+        if (!order) {
+            return resp.status(404).send({
+                status: 'error',
+                message: 'This order was not found on the list'
+            });
+        }
+        if (status==="" || status==null){
+            return resp.status(400).send({
+                status: 'error',
+                message: 'Status field cannot be left empty'
+            });
+        }else if (validate.hasWhiteSpace(status) != false) {
+            return resp.status(400).send({
+                status: 'error',
+                message: 'No whitespaces allowed'
+            });
+        }else if (statusArray.includes(status) != true) {
+            return resp.status(400).send({
+                status: 'error',
+                message: 'The status you entered is invalid'
+            });
+        }
+        
+        req.status = status;
+        req.order = order;
+        
         next();
     }
 }
