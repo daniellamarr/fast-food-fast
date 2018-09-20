@@ -7,10 +7,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.send('Andela 21 Project - Fast-Food-Fast');
-});
-
 Route(app);
 
 const port = process.env.PORT || 6060;
