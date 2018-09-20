@@ -51,6 +51,7 @@ class Middleware {
             });
         }
         req.place = place;
+        
         next();
     }
 

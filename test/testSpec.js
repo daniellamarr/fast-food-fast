@@ -1,7 +1,8 @@
 import { should as _should, use, request } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../index';
-let should = _should();
+
+const should = _should();
 
 use(chaiHttp);
 
