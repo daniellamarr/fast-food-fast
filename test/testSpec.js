@@ -5,20 +5,6 @@ let should = _should();
 
 use(chaiHttp);
 
-let test_order_fail = {
-    "menu": [
-		{
-			"quantity":2,
-			"price":100
-		},
-		{
-			"order":"Pizza",
-			"quantity":5,
-			"price":1000
-		}
-	]
-}
-
 describe('/GET /api/v1/orders', () => {
     it('it should GET all orders', (done) => {
     request(server)
@@ -42,7 +28,7 @@ describe('/GET /api/v1/orders/:id', () => {
         });
     });
 
-    it('it should fail with a 404 error', (done) => {
+    it('it should return a 404 error', (done) => {
     request(server)
         .get('/api/v1/orders/' + 3)
         .end((err, res) => {
@@ -79,10 +65,47 @@ describe('/POST /api/v1/orders', () => {
         });
     });
 
+    it('it should return a 400 error status if req.body object is null', (done) => {
+    const test_order = {}
+    request(server)
+        .post('/api/v1/orders')
+        .send(test_order)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
     it('it should return a 400 error status if order parameter does not exist', (done) => {
     const test_order = {
         "menu": [
             {
+                "quantity":2,
+                "price":2000
+            },
+            {
+                "order":"Pizza",
+                "quantity":5,
+                "price":1000
+            }
+        ]
+    }
+    request(server)
+        .post('/api/v1/orders')
+        .send(test_order)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 400 error status if whitespaces exists on field', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"   ",
                 "quantity":2,
                 "price":2000
             },
@@ -203,9 +226,13 @@ describe('/POST /api/v1/orders', () => {
 });
 
 describe('/POST /api/v1/orders', () => {
-    it('it should update an order status to true if false', (done) => {
+    it('it should update an order status', (done) => {
+    const test_status = {
+        status: "accepted"
+    }
     request(server)
         .put('/api/v1/orders/' + 1)
+        .send(test_status)
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -213,11 +240,39 @@ describe('/POST /api/v1/orders', () => {
         });
     });
 
-    it('it should update an order status to false if true', (done) => {
+    it('it should return a 400 status error when status field is empty or null', (done) => {
     request(server)
         .put('/api/v1/orders/' + 1)
         .end((err, res) => {
-            res.should.have.status(200);
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 400 status error when status field has white spaces', (done) => {
+    const test_status = {
+        status: "   "
+    }
+    request(server)
+        .put('/api/v1/orders/' + 1)
+        .send(test_status)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 400 status error when status is invalid', (done) => {
+    const test_status = {
+        status: "qwedfrgvbvc"
+    }
+    request(server)
+        .put('/api/v1/orders/' + 1)
+        .send(test_status)
+        .end((err, res) => {
+            res.should.have.status(400);
             res.body.should.be.a('object');
             done();
         });
