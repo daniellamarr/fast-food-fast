@@ -4,6 +4,16 @@
     font-family: 'Muli', sans-serif;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#container {
+    position: relative;
+    min-height: 100%;
+}
+
 a:focus, button:focus, input:focus, textarea:focus {
     outline: none;
 }
@@ -77,6 +87,10 @@ nav {
 nav ul.s-hide li {
     display: inline;
     padding-right: 40px;
+}
+
+.s-hide i.ti-shopping-cart {
+    font-size: 25px;
 }
 
 nav ul.l-hide {
@@ -478,10 +492,6 @@ table tbody tr td {
     padding-top: 100px;
 }
 
-.logged {
-    padding-bottom: 160px;
-}
-
 .login {
     width: 400px;
     color: #fff;
@@ -580,16 +590,107 @@ table tbody tr td {
 /** Footer */
 
 footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: chocolate;
-    padding: 20px;
+    padding: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: -50px;
     text-align: center;
+    height: 50px;
 }
 
 footer a:hover {
     color: #eee;
 }
 
+/** Modal **/
+
+.modal {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    top: 0;
+    z-index: 1000;
+    padding-top: 100px;
+    display: none;
+    transition: 0.5s all;
+}
+
+.modal-content {
+    background-color: #eee;
+    width: 400px;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+.modal-content h2 {
+    margin-bottom: 10px;
+}
+
+.modal-content input {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    border-radius: 3px;
+    border: none;
+    background-color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    font-size: 18px;
+}
+
+.modal-show {
+    display: inherit;
+}
+
 /** Responsive **/
+
+@media (max-width: 1072px) {
+    nav > ul.s-hide > li {
+        padding-right: 20px;
+    }
+
+    #foods .item {
+        width: 30%;
+    }
+
+    #foods .item .price {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    nav > ul.s-hide > li {
+        padding-right: 30px;
+    }
+
+    #foods .item {
+        width: 30%;
+    }
+
+    #foods .item .price {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    nav > ul.s-hide > li {
+        padding-right: 20px;
+    }
+
+    #foods .item {
+        width: 30%;
+    }
+
+    #foods .item .price {
+        display: none;
+    }
+}
 
 @media (max-width: 500px) {
     header, header.hbg {
@@ -722,5 +823,27 @@ footer a:hover {
 
     .foods .item {
         width: 100% !important;
+    }
+
+    .modal-content {
+        width: 300px;
+    }
+}
+
+@media (max-width: 350px) {
+    .logo {
+        font-size: 13px;
+    }
+
+    .login h4 {
+        font-size: 12px;
+    }
+
+    nav > ul.l-hide > li {
+        padding-right: 20px;
+    }
+
+    .modal-content {
+        width: 250px;
     }
 }
