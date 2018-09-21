@@ -16,22 +16,63 @@
                 <h1><a href="index.html">Fast-Food-Fast</a></h1>
             </div>
             <nav>
-                <ul>
+                <ul class="s-hide">
+                    <li>
+                        <a href="javascript:;" id="shoppingcart-b" class="shoppingcart-b">Cart <span class="badge">3</span></a>
+                    </li>
                     <li><a href="login.html">Login</a></li>
                     <li><a href="signup.html">Sign Up</a></li>
-                    <a href="javascript:;" class="menu" id="toggle"><i class="ti ti-menu"></i></a>
-                    <div class="dropdown hide" id="dropdown">
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="signup.html">Sign Up</a></li>
-                        </ul>
-                    </div>
+                </ul>
+                <div id="shoppingcart" class="cart-div hide">
+                    <p>You have 3 item(s)</p>
+                    <ul class="cart-details">
+                        <li>
+                            <a href="">
+                                <img src="images/cart/1.jpeg" alt="">
+                                <p class="cart-title">Hamburger</p>
+                                <p>1 x N2000</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="images/cart/1.jpeg" alt="">
+                                <p class="cart-title">Chicken n Chips</p>
+                                <p>4 x N850</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="images/cart/1.jpeg" alt="">
+                                <p class="cart-title">Shawarma</p>
+                                <p>2 x N3000</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="order.html"><button>Place Order</button></a>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <ul class="l-hide">
+                    <li>
+                        <a href="javascript:;" id="shoppingcart-b" class="shoppingcart-b"><i class="ti ti-shopping-cart"></i><sup>10</sup></a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="menu" id="toggle"><i class="ti ti-menu"></i></a>
+                        <div class="dropdown hide" id="dropdown">
+                            <ul>
+                                <li><a href="login.html">Login</a></li>
+                                <li><a href="signup.html">Sign Up</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </header>
         <section id="order">
             <div class="title">
-                <h1>Complete Order</h1>
+                <h1>Cart</h1>
+                <p>Place your order</p>
             </div>
         </section>
         <section id="checkout">
