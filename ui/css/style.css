@@ -414,6 +414,12 @@ header.hbg .badge {
     list-style: none;
 }
 
+.profileButtons {
+    margin-top: 150px;
+    position: absolute;
+    right: 10px;
+}
+
 #aside {
     background-color: #eee;
     position: fixed;
@@ -621,7 +627,7 @@ footer a:hover {
 }
 
 .modal-content {
-    background-color: #eee;
+    background-color: #ddd;
     width: 400px;
     padding: 20px;
     border-radius: 3px;
@@ -631,7 +637,7 @@ footer a:hover {
     margin-bottom: 10px;
 }
 
-.modal-content input {
+.modal-content input, .modal-content textarea {
     display: block;
     margin-bottom: 10px;
     width: 100%;
@@ -642,6 +648,7 @@ footer a:hover {
     padding-bottom: 10px;
     padding-left: 5px;
     font-size: 18px;
+    resize: none;
 }
 
 .modal-show {

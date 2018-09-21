@@ -75,3 +75,6 @@ closeModal("addmenu","click")
 
 modal("editmenubtn","target","click")
 closeModal("editmenu","click")
+
+modal("editprofilebtn","target","click")
+closeModal("editprofile","click")
