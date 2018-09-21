@@ -2,11 +2,11 @@
   "name": "fast-food-fast",
   "version": "1.0.0",
   "description": "A fast food delivery service app for a restaurant",
-  "main": "index.js",
+  "main": "./server/index.js",
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node",
-    "test": "nyc mocha --require babel-core/register",
-    "lint": "eslint --fix-dry-run index.js ./server/controllers/",
+    "start": "nodemon ./server/index.js --exec babel-node",
+    "test": "nyc mocha --require babel-core/register ./server/test/",
+    "lint": "eslint --fix-dry-run ./server/index.js ./server/controllers/",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
