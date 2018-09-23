@@ -42,6 +42,7 @@ CREATE TABLE orders (
     menu TEXT NOT NULL,
     amount INT NOT NULL,
     status VARCHAR(20) NOT NULL,
+    adminid INT NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
 )
 `;
