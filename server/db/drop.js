@@ -1,19 +1,19 @@
 import db from "./index";
 
 const removeUsers = `
-DROP TABLE IF EXISTS users cascade
+DROP TABLE IF EXISTS users CASCADE
 `;
 
 const removeAdmin = `
-DROP TABLE IF EXISTS admin cascade
+DROP TABLE IF EXISTS admin CASCADE
 `;
 
 const removeMenu = `
-DROP TABLE IF EXISTS menu cascade
+DROP TABLE IF EXISTS menu CASCADE
 `;
 
 const removeOrders = `
-DROP TABLE IF EXISTS orders cascade
+DROP TABLE IF EXISTS orders CASCADE
 `;
 
 db.query(

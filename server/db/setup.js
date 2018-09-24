@@ -2,7 +2,7 @@ import db from "./index";
 
 const createUsers = `
 CREATE TABLE users (
-    id serial PRIMARY KEY NOT NULL,
+    id INT PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     phone INT NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE users (
 
 const createAdmin = `
 CREATE TABLE admin (
-    id serial PRIMARY KEY NOT NULL,
+    id INT PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     phone INT NOT NULL,
@@ -25,24 +25,24 @@ CREATE TABLE admin (
 
 const createMenu = `
 CREATE TABLE menu (
-    id serial PRIMARY KEY NOT NULL,
-    adminid INT NOT NULL,
+    id INT PRIMARY KEY NOT NULL,
     title VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
     price INT NOT NULL,
     image_path VARCHAR(50) NOT NULL,
+    adminid INT NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
 )
 `;
 
 const createOrders = `
 CREATE TABLE orders (
-    id serial PRIMARY KEY NOT NULL,
+    id INT PRIMARY KEY NOT NULL,
     userid INT NOT NULL,
     menu TEXT NOT NULL,
     amount INT NOT NULL,
     status VARCHAR(20) NOT NULL,
-    adminid INT NOT NULL,
+    acceptid INT NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
 )
 `;
