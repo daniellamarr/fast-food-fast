@@ -28,7 +28,7 @@ class CheckUser {
                 if (res.rows.length < 1) {
                     return resp.status(401).send({
                         status:"error",
-                        message:"You have entered a wrong credential"
+                        message:"Incorrect username or password"
                     })
                 }else{
                     const [user] = res.rows;
@@ -39,7 +39,7 @@ class CheckUser {
                     if (!pass) {
                         return resp.status(401).send({
                             status:"error",
-                            message:"You have entered a wrong credential"
+                            message:"Incorrect username or password"
                         });
                     }
                     const token = jwt.sign({ id: user.id }, keyconfig, {
