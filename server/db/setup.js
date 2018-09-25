@@ -2,10 +2,10 @@ import db from "./index";
 
 const createUsers = `
 CREATE TABLE users (
-    id INT PRIMARY KEY NOT NULL,
+    id serial PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone INT NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    phone NUMERIC(15) NOT NULL,
     password VARCHAR(100) NOT NULL,
     address TEXT NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
@@ -14,10 +14,10 @@ CREATE TABLE users (
 
 const createAdmin = `
 CREATE TABLE admin (
-    id INT PRIMARY KEY NOT NULL,
+    id serial PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone INT NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    phone NUMERIC(15) NOT NULL,
     password VARCHAR(100) NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
 )
@@ -25,24 +25,24 @@ CREATE TABLE admin (
 
 const createMenu = `
 CREATE TABLE menu (
-    id INT PRIMARY KEY NOT NULL,
+    id serial PRIMARY KEY NOT NULL,
     title VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
     price INT NOT NULL,
     image_path VARCHAR(50) NOT NULL,
-    adminid INT NOT NULL,
+    adminid INT,
     date_created TIMESTAMP DEFAULT Now()
 )
 `;
 
 const createOrders = `
 CREATE TABLE orders (
-    id INT PRIMARY KEY NOT NULL,
+    id serial PRIMARY KEY NOT NULL,
     userid INT NOT NULL,
     menu TEXT NOT NULL,
-    amount INT NOT NULL,
+    amount NUMERIC(15) NOT NULL,
     status VARCHAR(20) NOT NULL,
-    acceptid INT NOT NULL,
+    adminid INT,
     date_created TIMESTAMP DEFAULT Now()
 )
 `;
