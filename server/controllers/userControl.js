@@ -21,15 +21,7 @@ class UserControl {
                 resp.status(201).send({
                     status: "success",
                     message: "Your sign up was successful",
-                    token: token,
-                    user: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        phone: user.phone,
-                        address: user.address,
-                        date: user.date_created
-                    }
+                    token: token
                 });
             }
         )
