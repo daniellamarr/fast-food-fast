@@ -208,6 +208,42 @@ class Middleware {
 
         next();
     }
+
+    static validateLogin (req,resp,next) {
+        const email = req.body.email;
+        const password = req.body.password;
+        
+        if (email==null
+            || email.length===0
+            || validate.hasWhiteSpace(email)) {
+            return resp.status(400).send({
+                status: "error",
+                message: "Email field cannot be left empty"
+            })
+        }
+        if (validate.validateEmail(email)===false){
+            return resp.status(400).send({
+                status: "error",
+                message: "Invalid email syntax"
+            })
+        }
+        if (password==null
+            || password.length===0
+            || validate.hasWhiteSpace(password)) {
+            return resp.status(400).send({
+                status: "error",
+                message: "Password field cannot be left empty"
+            })
+        }
+        if (validate.validateInput(password,8,20)===false) {
+            return resp.status(400).send({
+                status: "error",
+                message: "Password: Min Character - 8,Max character - 20"
+            })
+        }
+
+        next();
+    }
 }
 
 export default Middleware;
