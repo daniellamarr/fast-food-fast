@@ -286,3 +286,125 @@ describe('/POST /api/v1/auth/signup', () => {
         })
     })
 })
+
+describe('/POST /api/v1/auth/login', () => {
+    before((done) => {
+    const user = {
+        name: "Lamarr",
+        email: "danny@gmail.com",
+        phone: "09099887766",
+        address: "Anthony, Lagos",
+        password: "123456789",
+        cpassword: "123456789"
+    }
+    request(server)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .end((err,res) => {
+            done();
+        })
+    })
+
+    it('it should login a user', (done) => {
+    const user = {
+        email: "danny@gmail.com",
+        password: "123456789"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('it should return a 400 error, email is null', (done) => {
+    const user = {
+        password: "qwertyuiopasdfg"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('it should return a 400 error, email syntax is invalid', (done) => {
+    const user = {
+        email: "dave@gmail",
+        password: "qwertyuiopasdfg"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('it should return a 400 error, password is null', (done) => {
+    const user = {
+        email: "dave@gmail.com"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('return a 400 error, password is below or above length', (done) => {
+    const user = {
+        email: "dave@gmail.com",
+        password: "sss"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('return a 401 error, user access not granted', (done) => {
+    const user = {
+        email: "dave@gmail.com",
+        password: "ssssawwqqqqq"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(401);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('return a 401 error, incorrect password', (done) => {
+    const user = {
+        email: "danny@gmail.com",
+        password: "sssaqqqqqasd"
+    }
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(user)
+        .end((err,res) => {
+            res.should.have.status(401);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})

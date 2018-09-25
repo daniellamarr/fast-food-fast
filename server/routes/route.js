@@ -24,10 +24,16 @@ const Route = (app) => {
         orderControl.updateOrderStatus
     );
 
-    app.post('/api/v1/auth/signup/',
+    app.post('/api/v1/auth/signup',
         CheckUser.validateUser,
         Middleware.validateUserSignup,
         UserControl.userSignup
+    );
+
+    app.post('/api/v1/auth/login/',
+        Middleware.validateLogin,
+        CheckUser.loginCredentials,
+        UserControl.userLogin
     );
 }
 

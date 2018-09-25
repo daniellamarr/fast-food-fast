@@ -26,6 +26,14 @@ class UserControl {
             }
         )
     }
+    
+    static userLogin (req,resp) {
+        resp.status(200).send({
+            status: "success",
+            message: 'Login successful',
+            token: req.token
+        })
+    }
 }
 
 export default UserControl;
