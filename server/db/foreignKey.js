@@ -2,7 +2,7 @@ import db from "./index";
 
 const ordersAForeignKey = `
 ALTER TABLE orders 
-ADD CONSTRAINT ordersakey FOREIGN KEY (acceptid)
+ADD CONSTRAINT ordersakey FOREIGN KEY (adminid)
 REFERENCES admin (id) ON DELETE CASCADE;
 `;
 
