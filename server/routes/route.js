@@ -1,5 +1,6 @@
-import orderControl from "../controllers/orderControl"
-import UserControl from "../controllers/userControl"
+import orderControl from "../controllers/orderControl";
+import UserControl from "../controllers/userControl";
+import AdminControl from "../controllers/adminControl";
 import Middleware from "../helpers/middleware";
 import CheckUser from "../helpers/checkUser";
 
@@ -30,10 +31,16 @@ const Route = (app) => {
         UserControl.userSignup
     );
 
-    app.post('/api/v1/auth/login/',
+    app.post('/api/v1/auth/login',
         Middleware.validateLogin,
         CheckUser.loginCredentials,
         UserControl.userLogin
+    );
+
+    app.post('/api/v1/auth/admin',
+        Middleware.validateLogin,
+        CheckUser.adminLoginCredentials,
+        AdminControl.adminLogin
     );
 }
 
