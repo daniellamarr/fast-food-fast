@@ -111,6 +111,23 @@ describe('/POST /api/v1/menu', () => {
         })
     })
 
+    it('return a 400 error, a field is empty', (done) => {
+    const menu = {
+        title: 'Spaghetti',
+        quantity: '10',
+        price: '  '
+    }
+    request(server)
+        .post('/api/v1/menu')
+        .send(menu)
+        .set('x-access-token',requestToken)
+        .end((err,res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
     it('return a 401 error, token not found', (done) => {
     const menu = {
         title: 'Spaghetti',
