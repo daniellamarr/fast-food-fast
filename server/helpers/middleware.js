@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import orders from "../model/orders";
 import validate from "./validate";
+import Responses from "./response";
 
 class Middleware {
     static validatePlaceOrder (req,resp,next) {
@@ -103,146 +104,122 @@ class Middleware {
     }
     
     static validateUserSignup (req,resp,next) {
-        const fullname = req.body.name;
-        const email = req.body.email;
-        const phone = req.body.phone;
-        const address = req.body.address;
-        const password = req.body.password;
-        const cpassword = req.body.cpassword;
-
-        if (fullname==null
-            || fullname.length===0
-            || validate.hasWhiteSpace(fullname)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Name field cannot be left empty"
-            })
+        const signup = [
+            {field:req.body.name,fname:'Name',min:3,max:50},
+            {field:req.body.email,fname:'Email',min:8,max:50},
+            {field:req.body.phone,fname:'Phone',min:11,max:15},
+            {field:req.body.address,fname:'Address',min:2,max:100},
+            {field:req.body.password,fname:'Password',min:8,max:20},
+            {field:req.body.cpassword,fname:'Confirm Password',min:8,max:20},
+        ]
+        let response = [];
+        signup.forEach(obj => {
+            if(obj.field==null){
+                response.push({
+                    status: 'error',
+                    message: `${obj.fname} cannot be null`
+                })
+            }else{
+                response.push(Responses.nullField(obj.field,
+                    `${obj.fname} field cannot be left empty`));
+                response.push(Responses.inputLength(obj.field,
+                `${obj.fname}: Min Char-${obj.min}, Max Char-${obj.max}`,
+                obj.min,obj.max));
+                if (obj.fname=="Email") {
+                    response.push(Responses.emailCheck(obj.field,
+                        "Invalid email syntax"));
+                }
+                if (obj.fname=="Phone") {
+                    response.push(Responses.isNaNCheck(obj.field,
+                        `${obj.fname} cannot be a string character`));
+                }
+            }
+        });
+        response.push(Responses.stringMatch(signup[4].field,signup[5].field,
+            "Passwords do not match"));
+        response = response.filter((e) => e !== undefined);
+        if (response != "") {
+            resp.status(400).send(response[0])
+        }else{
+            req.fullname = signup[0].field;
+            req.email = signup[1].field;
+            req.phone = signup[2].field;
+            req.address = signup[3].field;
+            req.password = bcrypt.hashSync(signup[4].field);
+            next();
         }
-        if (validate.validateInput(fullname,3,50)===false) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Name: Min Character - 3,Max character - 50"
-            })
-        }
-        if (email==null
-            || email.length===0
-            || validate.hasWhiteSpace(email)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Email field cannot be left empty"
-            })
-        }
-        if (validate.validateEmail(email)===false){
-            return resp.status(400).send({
-                status: "error",
-                message: "Invalid email syntax"
-            })
-        }
-        if (validate.validateInput(email,8,50)===false) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Email: Min Character - 8,Max character - 50"
-            })
-        }
-        if (phone==null
-            || phone.length===0
-            || validate.hasWhiteSpace(phone)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Phone field cannot be left empty"
-            })
-        }
-        if (isNaN(phone)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Phone Number cannot be a string character"
-            })
-        }
-        if (validate.validateInput(phone,11,15)===false) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Phone Number: Min Character - 11,Max character - 15"
-            })
-        }
-        if (address==null
-            || address.length===0
-            || validate.hasWhiteSpace(address)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Address field cannot be left empty"
-            })
-        }
-        if (password==null
-            || password.length===0
-            || validate.hasWhiteSpace(password)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Password field cannot be left empty"
-            })
-        }
-        if (cpassword==null
-            || cpassword.length===0
-            || validate.hasWhiteSpace(cpassword)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Confirm Password field cannot be left empty"
-            })
-        }
-        if (validate.validateInput(password,8,20)===false) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Password: Min Character - 8,Max character - 20"
-            })
-        }
-        if (password!==cpassword) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Passwords do not match"
-            })
-        }
-        req.fullname = fullname;
-        req.email = email;
-        req.phone = phone;
-        req.address = address;
-        req.password = bcrypt.hashSync(password);
-
-        next();
     }
 
     static validateLogin (req,resp,next) {
         const email = req.body.email;
         const password = req.body.password;
-        
-        if (email==null
-            || email.length===0
-            || validate.hasWhiteSpace(email)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Email field cannot be left empty"
-            })
+        let re = [];
+        if (email==null) {
+            re.push({status:'error',message:'Email cannot be left empty'})
+        }else if (password==null) {
+            re.push({status:'error',message:'Password cannot be left empty'})
+        }else{
+            re.push(Responses.nullField(email,
+                "Email field cannot be left empty"));
+            re.push(Responses.emailCheck(email,
+                "Invalid email syntax"));
+            re.push(Responses.nullField(password,
+                "Password field cannot be left empty"));
+            re.push(Responses.inputLength(password,
+                "Password: Min Char-8, Max Char-20",8,20));
         }
-        if (validate.validateEmail(email)===false){
-            return resp.status(400).send({
-                status: "error",
-                message: "Invalid email syntax"
-            })
+        re = re.filter((e) => e !== undefined);
+        if (re != "") {
+            resp.status(400).send(re[0])
+        }else{
+            next();
         }
-        if (password==null
-            || password.length===0
-            || validate.hasWhiteSpace(password)) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Password field cannot be left empty"
-            })
-        }
-        if (validate.validateInput(password,8,20)===false) {
-            return resp.status(400).send({
-                status: "error",
-                message: "Password: Min Character - 8,Max character - 20"
-            })
-        }
+    }
 
-        next();
+    static validateAddMenu (req,resp,next) {
+        const title = req.body.title;
+        const quantity = req.body.quantity;
+        const price = req.body.price;
+        let response = [];
+        if (title==null) {
+            response.push({
+                status:'error',
+                message: 'Title field cannot be left empty'
+            })
+        }else if (quantity==null) {
+            response.push({
+                status:'error',
+                message: 'Quantity field cannot be left empty'
+            })
+        }else if (price==null) {
+            response.push({
+                status:'error',
+                message: 'Price field cannot be left empty'
+            })
+        }else{
+            response.push(Responses.nullField(title,
+                "Title field cannot be left empty"));
+            response.push(Responses.inputLength(title,
+                "Title: Min Char-3,Max Char-30",3,30));
+            response.push(Responses.nullField(quantity,
+                "Quantity field cannot be left empty"));
+            response.push(Responses.isNaNCheck(quantity,
+                "Quantity cannot be a string character"));
+            response.push(Responses.inputLength(quantity,
+                "Quantity: Min Char-1,Max Char-4",1,4));
+            response.push(Responses.nullField(price,
+                "Price field cannot be left empty"));
+            response.push(Responses.inputLength(price,
+                "Price: Min Char-1,Max Char-4",1,5));
+            response.push(Responses.isNaNCheck(price,
+                "Price cannot be a string character"));
+        }
+        response = response.filter((e) => e !== undefined);
+        if (response != "") {
+            resp.status(400).send(response[0])
+        }else{
+            next();
+        }
     }
 }
 

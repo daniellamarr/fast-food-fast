@@ -1,8 +1,10 @@
 import orderControl from "../controllers/orderControl";
 import UserControl from "../controllers/userControl";
 import AdminControl from "../controllers/adminControl";
+import MenuControl from "../controllers/menuControl";
 import Middleware from "../helpers/middleware";
 import CheckUser from "../helpers/checkUser";
+import tokendecode from "../jwt/tokendecode";
 
 const Route = (app) => {
     app.get(
@@ -26,8 +28,8 @@ const Route = (app) => {
     );
 
     app.post('/api/v1/auth/signup',
-        CheckUser.validateUser,
         Middleware.validateUserSignup,
+        CheckUser.validateUser,
         UserControl.userSignup
     );
 
@@ -42,6 +44,13 @@ const Route = (app) => {
         CheckUser.adminLoginCredentials,
         AdminControl.adminLogin
     );
+
+    app.post('/api/v1/menu',
+        tokendecode,
+        CheckUser.validateAdmin,
+        Middleware.validateAddMenu,
+        MenuControl.addMenu
+    )
 }
 
 export default Route;
