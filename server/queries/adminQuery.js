@@ -6,6 +6,14 @@ class AdminQuery {
             values: [email]
         }
     }
+
+    static checkAdminIDQuery (id) {
+        return {
+            text: `
+            SELECT * FROM admin WHERE id = $1`,
+            values: [id]
+        }
+    }
 }
 
 export default AdminQuery;

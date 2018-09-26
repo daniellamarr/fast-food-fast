@@ -291,7 +291,7 @@ describe('/POST /api/v1/auth/login', () => {
     before((done) => {
     const user = {
         name: "Lamarr",
-        email: "danny@gmail.com",
+        email: "danielo@gmail.com",
         phone: "09099887766",
         address: "Anthony, Lagos",
         password: "123456789",
@@ -307,7 +307,7 @@ describe('/POST /api/v1/auth/login', () => {
 
     it('it should login a user', (done) => {
     const user = {
-        email: "danny@gmail.com",
+        email: "danielo@gmail.com",
         password: "123456789"
     }
     request(server)
