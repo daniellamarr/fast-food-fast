@@ -43,7 +43,8 @@ class CheckUser {
                             message:"Incorrect username or password"
                         });
                     }
-                    const token = jwt.sign({ id: user.id }, keyconfig, {
+                    const token = jwt.sign({
+                        id:user.id,key:user.email}, keyconfig, {
                         expiresIn: 86400
                     });
 
@@ -77,7 +78,8 @@ class CheckUser {
                             message:"Incorrect username or password"
                         });
                     }
-                    const token = jwt.sign({ id: user.id }, keyconfig, {
+                    const token = jwt.sign({
+                        id: user.id,key:user.email}, keyconfig, {
                         expiresIn: 86400
                     });
 
@@ -86,6 +88,22 @@ class CheckUser {
 
                     next();
                 }
+			}
+		)
+    }
+
+    static validateAdmin (req,resp,next) {
+		db.query(
+			AdminQuery.checkAdminQuery(req.tokenKey),
+			(err,res) => {
+                if (res.rows.length < 1) {
+                    return resp.status(401).send({
+                        status:"error",
+                        message:'Unauthorized access'
+                    })
+                }
+
+                next();
 			}
 		)
     }

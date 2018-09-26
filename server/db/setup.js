@@ -27,9 +27,9 @@ const createMenu = `
 CREATE TABLE menu (
     id serial PRIMARY KEY NOT NULL,
     title VARCHAR(50) NOT NULL,
-    quantity INT NOT NULL,
-    price INT NOT NULL,
-    image_path VARCHAR(50) NOT NULL,
+    quantity NUMERIC(15) NOT NULL,
+    price NUMERIC(15) NOT NULL,
+    image_path VARCHAR(50),
     adminid INT,
     date_created TIMESTAMP DEFAULT Now()
 )

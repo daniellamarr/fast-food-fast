@@ -244,6 +244,69 @@ class Middleware {
 
         next();
     }
+
+    static validateAddMenu (req,resp,next) {
+        const title = req.body.title;
+        const quantity = req.body.quantity;
+        const price = req.body.price;
+
+        if (title==null
+            || title.length===0
+            || validate.hasWhiteSpace(title)) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Title field cannot be left empty'
+            })
+        }
+        if (validate.validateInput(title,3,30)===false) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Title: Min Char-3,Max Char-30'
+            })
+        }
+        if (quantity==null
+            || quantity.length===0
+            || validate.hasWhiteSpace(quantity)) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Quantity field cannot be left empty'
+            })
+        }
+        if (validate.validateInput(quantity,1,4)===false) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Quantity: Min Char-1,Max Char-4'
+            })
+        }
+        if (isNaN(quantity)) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Quantity cannot be a string character'
+            })
+        }
+        if (price==null
+            || price.length===0
+            || validate.hasWhiteSpace(price)) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Price field cannot be left empty'
+            })
+        }
+        if (validate.validateInput(price,1,5)===false) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Price: Min Char-1,Max Char-5'
+            })
+        }
+        if (isNaN(price)) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'Price cannot be a string character'
+            })
+        }
+
+        next();
+    }
 }
 
 export default Middleware;
