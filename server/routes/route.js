@@ -3,6 +3,8 @@ import UserControl from "../controllers/userControl";
 import AdminControl from "../controllers/adminControl";
 import Middleware from "../helpers/middleware";
 import CheckUser from "../helpers/checkUser";
+import tokendecode from "../jwt/tokendecode";
+import MenuControl from "../controllers/menuControl";
 
 const Route = (app) => {
     app.get(
@@ -41,6 +43,13 @@ const Route = (app) => {
         Middleware.validateLogin,
         CheckUser.adminLoginCredentials,
         AdminControl.adminLogin
+    );
+
+    app.post('/api/v1/menu',
+        tokendecode,
+        CheckUser.validateAdmin,
+        Middleware.validateAddMenu,
+        MenuControl.addMenu
     );
 }
 
