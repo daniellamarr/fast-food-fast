@@ -191,7 +191,7 @@ class Middleware {
                 status:'error',
                 message: 'Quantity field cannot be left empty'
             })
-        }if (title==null) {
+        }else if (price==null) {
             response.push({
                 status:'error',
                 message: 'Price field cannot be left empty'
