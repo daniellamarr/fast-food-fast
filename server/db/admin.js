@@ -1,10 +1,13 @@
+import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import db from "./index";
 
-const fullname = 'Admin Fastfood';
-const email = 'admin@fastfoodfast.com';
-const phone  = '+2348135270797';
-const password = bcrypt.hashSync('admin12345678');
+dotenv.config();
+
+const fullname = process.env.ADMINNAME;
+const email = process.env.ADMINEMAIL;
+const phone  = process.env.ADMINPHONE;
+const password = bcrypt.hashSync(process.env.ADMINPASS);
 
 const adminData = {
     text: `
