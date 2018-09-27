@@ -25,9 +25,9 @@ class MenuControl {
         )
     }
 
-    static getMenu (req,resp) {
+    static getAllMenu (req,resp) {
         db.query(
-            MenuQuery.getMenuQuery(),
+            MenuQuery.getAllMenuQuery(),
             (err, res) => {
                 let all = [];
                 const menu = res.rows;

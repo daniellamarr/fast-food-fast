@@ -13,7 +13,7 @@ class MenuQuery {
             values: [title,quantity,price,adminid]
         }
     }
-    static getMenuQuery() {
+    static getAllMenuQuery() {
         return {
             text: `SELECT * FROM menu`
         }

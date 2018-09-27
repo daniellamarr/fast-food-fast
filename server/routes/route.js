@@ -53,7 +53,7 @@ const Route = (app) => {
     );
 
     app.get('/api/v1/menu',
-        MenuControl.getMenu
+        MenuControl.getAllMenu
     )
 }
 
