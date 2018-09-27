@@ -45,6 +45,18 @@ request(server)
     })
 })
 
+describe('/GET /api/v1/menu', () => {
+    it('it should return 404 when no menu found', (done) => {
+    request(server)
+        .get('/api/v1/menu')
+        .end((err,res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})
+
 describe('/POST /api/v1/menu', () => {
     it('it should add a new menu', (done) => {
     const menu = {
@@ -241,6 +253,18 @@ describe('/POST /api/v1/menu', () => {
         .set('x-access-token',userToken)
         .end((err,res) => {
             res.should.have.status(401);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})
+
+describe('/GET /api/v1/menu', () => {
+    it('it should get all menu', (done) => {
+    request(server)
+        .get('/api/v1/menu')
+        .end((err,res) => {
+            res.should.have.status(200);
             res.body.should.be.a('object');
             done();
         })

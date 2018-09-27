@@ -24,6 +24,35 @@ class MenuControl {
             }
         )
     }
+
+    static getMenu (req,resp) {
+        db.query(
+            MenuQuery.getMenuQuery(),
+            (err, res) => {
+                let all = [];
+                const menu = res.rows;
+                if (menu=="") {
+                    return resp.status(404).send({
+                        status: 'error',
+                        message: 'No Menu Found'
+                    })
+                }
+                menu.forEach(obj => {
+                    all.push({
+                        id: obj.id,
+                        title:obj.title,
+                        price:obj.price,
+                        quantity:obj.quantity,
+                    })
+                });
+                return resp.status(200).send({
+                    status: 'success',
+                    message: 'Available Menu',
+                    menu: all
+                })
+            }
+        )
+    }
 }
 
 export default MenuControl;
