@@ -39,10 +39,19 @@ const createOrders = `
 CREATE TABLE orders (
     id serial PRIMARY KEY NOT NULL,
     userid INT NOT NULL,
-    menu TEXT NOT NULL,
     amount NUMERIC(15) NOT NULL,
     status VARCHAR(20) NOT NULL,
     adminid INT,
+    date_created TIMESTAMP DEFAULT Now()
+)
+`;
+
+const createOrderItems = `
+CREATE TABLE orderitems (
+    id serial PRIMARY KEY NOT NULL,
+    itemid INT NOT NULL,
+    orderid INT NOT NULL,
+    quantity INT NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
 )
 `;
@@ -87,6 +96,17 @@ db.query(
             throw err
         }else{
             console.log('Orders Table Added');
+        };
+    }
+);
+
+db.query(
+    createOrderItems,
+    (err,res) => {
+        if (err) {
+            throw err
+        }else{
+            console.log('Order Items Table Added');
         };
     }
 );

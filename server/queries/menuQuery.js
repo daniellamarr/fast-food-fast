@@ -15,7 +15,20 @@ class MenuQuery {
     }
     static getAllMenuQuery() {
         return {
-            text: `SELECT * FROM menu`
+            text: `SELECT * FROM menu WHERE quantity > 0`
+        }
+    }
+    static getOneMenuQuery(title) {
+        return {
+            text: `SELECT * FROM menu WHERE title = $1`,
+            values: [title]
+        }
+    }
+
+    static updateMenuQtyQuery(id,quantity) {
+        return {
+            text: `UPDATE menu SET quantity = $2 WHERE id = $1`,
+            values: [id,quantity]
         }
     }
 }

@@ -16,6 +16,10 @@ const removeOrders = `
 DROP TABLE IF EXISTS orders CASCADE
 `;
 
+const removeOrderItems = `
+DROP TABLE IF EXISTS orderitems CASCADE
+`;
+
 db.query(
     removeUsers,
     (err,res) => {
@@ -56,6 +60,17 @@ db.query(
             throw err
         }else{
             console.log('Orders Table Dropped');
+        };
+    }
+);
+
+db.query(
+    removeOrderItems,
+    (err,res) => {
+        if (err) {
+            throw err
+        }else{
+            console.log('Orders Items Table Dropped');
         };
     }
 );

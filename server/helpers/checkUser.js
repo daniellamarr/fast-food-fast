@@ -21,6 +21,22 @@ class CheckUser {
 			}
 		)
     }
+
+    static userCheck (req,resp,next) {
+		db.query(
+			UserQuery.checkUserIDQuery(req.tokenId),
+			(err,res) => {
+                if (res.rows.length < 1) {
+                    return resp.status(401).send({
+                        status:"error",
+                        message:"You are not logged in"
+                    })
+                }else{
+                    next()
+                }
+			}
+		)
+    }
     
     static loginCredentials (req,resp,next) {
         db.query(

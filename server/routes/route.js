@@ -5,6 +5,7 @@ import Middleware from "../helpers/middleware";
 import CheckUser from "../helpers/checkUser";
 import tokendecode from "../jwt/tokendecode";
 import MenuControl from "../controllers/menuControl";
+import OrderHelper from "../helpers/orderHelper";
 
 const Route = (app) => {
     app.get(
@@ -13,7 +14,10 @@ const Route = (app) => {
     );
 
     app.post('/api/v1/orders',
+        tokendecode,
+        CheckUser.userCheck,
         Middleware.validatePlaceOrder,
+        OrderHelper.helpPlaceOrder,
         orderControl.placeOrder
     );
 

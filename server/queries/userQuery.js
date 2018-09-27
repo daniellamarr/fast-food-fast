@@ -21,6 +21,14 @@ class UserQuery {
             values: [email]
         }
     }
+
+    static checkUserIDQuery (id) {
+        return {
+            text: `
+            SELECT * FROM users WHERE id = $1`,
+            values: [id]
+        }
+    }
 }
 
 export default UserQuery;

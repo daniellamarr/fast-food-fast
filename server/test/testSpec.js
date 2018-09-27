@@ -6,6 +6,41 @@ const should = _should();
 
 use(chaiHttp);
 
+let requestToken;
+let userToken;
+before((done) => {
+const user = {
+    email: 'admin@fastfoodfast.com',
+    password: 'admin12345678'
+}
+request(server)
+    .post('/api/v1/auth/admin')
+    .send(user)
+    .end((err,res) => {
+        const { token } = res.body;
+        requestToken = token;
+        done();
+    })
+})
+before((done) => {
+const user = {
+    name: "Lamarr",
+    email: "danielo@gmail.com",
+    phone: "09099887766",
+    address: "Anthony, Lagos",
+    password: "123456789",
+    cpassword: "123456789"
+}
+request(server)
+    .post('/api/v1/auth/signup')
+    .send(user)
+    .end((err,res) => {
+        const { token } = res.body;
+        userToken = token;
+        done();
+    })
+})
+
 describe('/GET /api/v1/orders', () => {
     it('it should GET all orders', (done) => {
     request(server)
@@ -45,22 +80,39 @@ describe('/POST /api/v1/orders', () => {
     const test_order = {
         "menu": [
             {
-                "order":"Shawarma",
+                "order":"Beans",
                 "quantity":2,
-                "price":2000
-            },
-            {
-                "order":"Pizza",
-                "quantity":5,
                 "price":1000
-            }
+            },
         ]
     }
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(201);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return 404 error if menu is not found', (done) => {
+    const test_order = {
+        "menu": [
+            {
+                "order":"Frittles",
+                "quantity":2,
+                "price":2000
+            },
+        ]
+    }
+    request(server)
+        .post('/api/v1/orders')
+        .send(test_order)
+        .set('x-access-token',userToken)
+        .end((err, res) => {
+            res.should.have.status(404);
             res.body.should.be.a('object');
             done();
         });
@@ -71,6 +123,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -95,6 +148,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -120,6 +174,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -144,6 +199,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -168,6 +224,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -193,6 +250,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -218,6 +276,7 @@ describe('/POST /api/v1/orders', () => {
     request(server)
         .post('/api/v1/orders')
         .send(test_order)
+        .set('x-access-token',userToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -288,4 +347,6 @@ describe('/POST /api/v1/orders', () => {
             done();
         });
     });
+
+
 });

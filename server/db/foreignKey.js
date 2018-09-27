@@ -12,6 +12,12 @@ ADD CONSTRAINT ordersukey FOREIGN KEY (userid)
 REFERENCES users (id) ON DELETE CASCADE;
 `;
 
+const ordersIForeignKey = `
+ALTER TABLE orderitems 
+ADD CONSTRAINT itemskey FOREIGN KEY (itemid)
+REFERENCES orders (id) ON DELETE CASCADE;
+`;
+
 const menuForeignKey = `
 ALTER TABLE menu 
 ADD CONSTRAINT menukey FOREIGN KEY (adminid)
@@ -36,6 +42,17 @@ db.query(
             throw err
         }else{
             console.log('Users Key Added');
+        };
+    }
+);
+
+db.query(
+    ordersIForeignKey,
+    (err,res) => {
+        if (err) {
+            throw err
+        }else{
+            console.log('Order Items Key Added');
         };
     }
 );

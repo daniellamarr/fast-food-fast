@@ -31,7 +31,7 @@ class Middleware {
             }else if (menu[i].price=="" || menu[i].price==null) {
                 return resp.status(400).send({
                     status:"error",
-                    message:"Please fill in your price"
+                    message:"Please fill in price"
                 })
             }else if (typeof(menu[i].quantity) != "number") {
                 return resp.status(400).send({
@@ -44,14 +44,7 @@ class Middleware {
                     message:"Price must be a number"
                 })
             }
-            place.push({
-                id: i + 1,
-                order: menu[i].order,
-                quantity: menu[i].quantity,
-                price: menu[i].price
-            });
         }
-        req.place = place;
         
         next();
     }
