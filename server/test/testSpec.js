@@ -206,31 +206,6 @@ describe('/POST /api/v1/orders', () => {
             done();
         });
     });
-
-    it('it should return a 400 error status when price parameter does not exist', (done) => {
-    const test_order = {
-        "menu": [
-            {
-                "order":"Shawarma",
-                "quantity":2
-            },
-            {
-                "order":"Pizza",
-                "quantity":5,
-                "price":1000
-            }
-        ]
-    }
-    request(server)
-        .post('/api/v1/orders')
-        .send(test_order)
-        .set('x-access-token',userToken)
-        .end((err, res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            done();
-        });
-    });
     
     it('it should return a 400 error status when quantity parameter is not a number', (done) => {
     const test_order = {
@@ -244,32 +219,6 @@ describe('/POST /api/v1/orders', () => {
                 "order":"Pizza",
                 "quantity":5,
                 "price":1000
-            }
-        ]
-    }
-    request(server)
-        .post('/api/v1/orders')
-        .send(test_order)
-        .set('x-access-token',userToken)
-        .end((err, res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            done();
-        });
-    });
-
-    it('it should return a 400 error status when price parameter is not a number', (done) => {
-    const test_order = {
-        "menu": [
-            {
-                "order":"Shawarma",
-                "quantity":2,
-                "price":2000
-            },
-            {
-                "order":"Pizza",
-                "quantity":5,
-                "price":"1000"
             }
         ]
     }

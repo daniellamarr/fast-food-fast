@@ -20,7 +20,7 @@ class MenuQuery {
     }
     static getOneMenuQuery(title) {
         return {
-            text: `SELECT * FROM menu WHERE title = $1`,
+            text: `SELECT * FROM menu WHERE title = $1 AND quantity > 0`,
             values: [title]
         }
     }

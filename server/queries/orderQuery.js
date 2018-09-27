@@ -1,11 +1,11 @@
 class OrderQuery {
-	static addOrderQuery(user,total,status) {
+	static addOrderQuery(user,status) {
 		return {
 			text: `
 			INSERT INTO orders (
 				userid,amount,status
 			) VALUES ($1, $2, $3) RETURNING *`,
-			values: [user,total,status]
+			values: [user,0,status]
 		}
 	}
 
@@ -16,6 +16,13 @@ class OrderQuery {
 				itemid,orderid,quantity
 			) VALUES ($1, $2, $3) RETURNING *`,
 			values: [item,order,quantity]
+		}
+	}
+
+	static updateAmountQuery (id,total) {
+		return {
+			text: `UPDATE orders SET amount = $2 WHERE id = $1 RETURNING *`,
+			values: [id,total]
 		}
 	}
 }

@@ -1,17 +1,28 @@
 import validate from "../helpers/validate"
 import orders from "../model/orders";
 import db from "../db";
-import MenuQuery from "../queries/menuQuery";
+import OrderQuery from "../queries/orderQuery";
 
 class orderControl {
     static placeOrder(req,resp) {
         const { menu } = req.body
-        return resp.status(201).send({
-            status: 'success',
-            message: 'Your order was placed successfully',
-            orderid: req.itemid,
-            order: menu
-        })
+        const total = validate.sumPrices(req.prices);
+        db.query(
+            OrderQuery.updateAmountQuery(req.itemid,total),
+            ((err,res)=>{
+                const [ respon ] = res.rows;
+                const responses = {
+                    orderid: respon.id,
+                    amount: respon.amount,
+                }
+                return resp.status(201).send({
+                    status: 'success',
+                    message: 'Your order was placed successfully',
+                    order: menu,
+                    orderdetails: responses
+                })
+            })
+        )
     };
 
     static getAllOrders(req,resp) {

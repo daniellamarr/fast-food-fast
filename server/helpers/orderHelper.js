@@ -6,12 +6,6 @@ import OrderQuery from "../queries/orderQuery";
 class OrderHelper {
     static helpPlaceOrder (req,resp,next) {
         const { menu } = req.body;
-        let prices = [];
-        for (let j = 0; j < menu.length; j++) {
-            const sum = menu[j].price * menu[j].quantity;
-            prices.push(sum);
-        }
-        const total = validate.sumPrices(prices)
         const status = 'new';
 
         let allorder = [];
@@ -40,18 +34,23 @@ class OrderHelper {
                 })
             }else{
                 db.query(
-                    OrderQuery.addOrderQuery(req.tokenId,total,status)
+                    OrderQuery.addOrderQuery(req.tokenId,status)
                 )
                 .then(ord => {
                     const [ ret ] = ord.rows;
                     const id = ret.id
+                    let prices = [];
+                    let queries = [];
                     for (let j = 0; j < menu.length; j++) {
-                        db.query(
+                        const query = db.query(
                             MenuQuery.getOneMenuQuery(menu[j].order)
                         ).then(men => {
                             const [ rest ] = men.rows;
                             const mid = rest.id
                             const diff = rest.quantity - menu[j].quantity;
+                            prices.push(rest.price * menu[j].quantity);
+                            req.prices = prices
+
                             db.query(
                                 OrderQuery.addOrderItemsQuery(id,mid,menu[j].quantity)
                             ).then(snd => {})
@@ -59,9 +58,14 @@ class OrderHelper {
                                 MenuQuery.updateMenuQtyQuery(mid,diff)
                             ).then(snd => {})
                         })
+                        queries.push(query);
                     }
-                    req.itemid = id;
-                    next();
+
+                    Promise.all(queries).then(() => {
+                        req.prices = prices;
+                        req.itemid = id;
+                        next();
+                    });
                 })
             }
         })

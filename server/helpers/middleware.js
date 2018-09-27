@@ -11,7 +11,6 @@ class Middleware {
                 message:"Your request object cannot be left empty"
             })
         }
-        let place = [];
         for (let i = 0; i < menu.length; i++) {
             if (menu[i].order=="" || menu[i].order==null) {
                 return resp.status(400).send({
@@ -28,20 +27,10 @@ class Middleware {
                     status:"error",
                     message:"Please fill in your quantity"
                 })
-            }else if (menu[i].price=="" || menu[i].price==null) {
-                return resp.status(400).send({
-                    status:"error",
-                    message:"Please fill in price"
-                })
             }else if (typeof(menu[i].quantity) != "number") {
                 return resp.status(400).send({
                     status:"error",
                     message:"Quantity must be a number"
-                })
-            }else if (typeof(menu[i].price) != "number") {
-                return resp.status(400).send({
-                    status:"error",
-                    message:"Price must be a number"
                 })
             }
         }
