@@ -4,7 +4,7 @@
   "description": "A fast food delivery service app for a restaurant",
   "main": "./server/index.js",
   "scripts": {
-    "start": "npm run migrate & babel-node ./server/index.js --exec babel-node",
+    "start": "npm run migrate & nodemon ./server/index.js --exec babel-node",
     "test": "nyc mocha --require babel-core/register ./server/test/",
     "pretest": "npm run migrate",
     "lint": "eslint --fix-dry-run ./server/index.js ./server/controllers/",
