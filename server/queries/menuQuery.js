@@ -13,6 +13,11 @@ class MenuQuery {
             values: [title,quantity,price,adminid]
         }
     }
+    static getAllMenuQuery() {
+        return {
+            text: `SELECT * FROM menu`
+        }
+    }
 }
 
 export default MenuQuery;
