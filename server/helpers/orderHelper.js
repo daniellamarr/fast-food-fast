@@ -71,6 +71,24 @@ class OrderHelper {
         })
     }
 
+    static helpAdminGetOrders (req,resp,next) {
+        db.query(
+            OrderQuery.getAllOrdersQuery())
+        .then(res => {
+            const order = res.rows;
+
+            if (order=="" || order==null) {
+                return resp.status(404).send({
+                    status: 'error',
+                    message: 'No order found'
+                })
+            }else{
+                req.order = order;
+                next();
+            }
+        })
+    }
+
     static helpGetUserOrders (req,resp,next) {
         db.query(
             OrderQuery.getUserOrderQuery(req.id))

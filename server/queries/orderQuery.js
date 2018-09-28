@@ -35,6 +35,14 @@ class OrderQuery {
 		}
 	}
 
+	static getAllOrdersQuery(){
+		return {
+			text: `
+			SELECT * FROM orders
+			`,
+		}
+	}
+
 	static getUserItemsQuery(item){
 		return {
 			text: `
