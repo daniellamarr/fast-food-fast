@@ -53,6 +53,26 @@ class MenuControl {
             }
         )
     }
+
+    static getOneMenu(req,resp) {
+        db.query(
+            MenuQuery.getOneMenuIDQuery(req.params.id),
+            (err, res) => {
+                const [menu] = res.rows;
+                if (menu=="" || menu==null) {
+                    return resp.status(404).send({
+                        status: 'error',
+                        message: 'Menu Not Found'
+                    })
+                }
+                return resp.status(200).send({
+                    status: 'success',
+                    message: 'Returned one menu',
+                    menu: menu
+                })
+            }
+        )
+    }
 }
 
 export default MenuControl;

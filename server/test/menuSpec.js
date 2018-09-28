@@ -270,3 +270,35 @@ describe('/GET /api/v1/menu', () => {
         })
     })
 })
+
+describe('/GET /api/v1/menu/:id', () => {
+    it('it should get one menu', (done) => {
+    request(server)
+        .get('/api/v1/menu/1')
+        .end((err,res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('it should return a 400 error if id parameter is not a number', (done) => {
+    request(server)
+        .get('/api/v1/menu/aaa')
+        .end((err,res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+
+    it('it should return a 404 error if menu is not found', (done) => {
+    request(server)
+        .get('/api/v1/menu/10')
+        .end((err,res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+        })
+    })
+})
