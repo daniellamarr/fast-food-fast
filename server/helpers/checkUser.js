@@ -37,6 +37,18 @@ class CheckUser {
 			}
 		)
     }
+
+    static idVerification(req, resp, next) {
+        if(req.tokenId != req.params.id){
+            resp.status(404).send({
+                status: 'error',
+                message: 'User does not exist'
+            });
+        } else {
+            req.id = req.tokenId;
+            next();
+        }
+    }
     
     static loginCredentials (req,resp,next) {
         db.query(

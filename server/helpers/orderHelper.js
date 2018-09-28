@@ -52,7 +52,7 @@ class OrderHelper {
                             req.prices = prices
 
                             db.query(
-                                OrderQuery.addOrderItemsQuery(id,mid,menu[j].quantity)
+                                OrderQuery.addOrderItemsQuery(id,rest.title,menu[j].quantity)
                             ).then(snd => {})
                             db.query(
                                 MenuQuery.updateMenuQtyQuery(mid,diff)
@@ -69,6 +69,49 @@ class OrderHelper {
                 })
             }
         })
+    }
+
+    static helpGetUserOrders (req,resp,next) {
+        db.query(
+            OrderQuery.getUserOrderQuery(req.id))
+        .then(res => {
+            const order = res.rows;
+
+            if (order=="" || order==null) {
+                return resp.status(404).send({
+                    status: 'error',
+                    message: 'No order found'
+                })
+            }else{
+                req.order = order;
+                next();
+            }
+        })
+    }
+
+    static helpGetOrderItems (req,resp,next) {
+        const order = req.order;
+        let queries = [];
+        let items = [];
+        order.forEach(obj => {
+            const query = db.query(
+                OrderQuery.getUserItemsQuery(obj.id))
+            .then(res_ => {
+                const item = res_.rows;
+                
+                items.push({
+                    id: obj.id,
+                    price: obj.amount,
+                    status: obj.status,
+                    food: item
+                });
+            })
+            queries.push(query);
+        });
+        Promise.all(queries).then(() => {
+            req.orders = items;
+            next();
+        });
     }
 }
 

@@ -41,6 +41,14 @@ class orderControl {
         });
     }
 
+    static getUserOrders(req,resp) {
+        return resp.status(200).send({
+            status: 'success',
+            message: 'Orders returned successfully',
+            order: req.orders
+        })
+    }
+
     static updateOrderStatus(req,resp) {
         req.order.status = req.status;
         return resp.send({

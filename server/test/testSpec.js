@@ -8,20 +8,7 @@ use(chaiHttp);
 
 let requestToken;
 let userToken;
-before((done) => {
-const user = {
-    email: 'admin@fastfoodfast.com',
-    password: 'admin12345678'
-}
-request(server)
-    .post('/api/v1/auth/admin')
-    .send(user)
-    .end((err,res) => {
-        const { token } = res.body;
-        requestToken = token;
-        done();
-    })
-})
+let smallToken;
 before((done) => {
 const user = {
     name: "Lamarr",
@@ -37,6 +24,38 @@ request(server)
     .end((err,res) => {
         const { token } = res.body;
         userToken = token;
+        done();
+    })
+})
+before((done) => {
+const user = {
+    name: "Funsho",
+    email: "funsho@gmail.com",
+    phone: "09099887766",
+    address: "Anthony, Lagos",
+    password: "123456789",
+    cpassword: "123456789"
+}
+request(server)
+    .post('/api/v1/auth/signup')
+    .send(user)
+    .end((err,res) => {
+        const { token } = res.body;
+        smallToken = token;
+        done();
+    })
+})
+before((done) => {
+const user = {
+    email: 'admin@fastfoodfast.com',
+    password: 'admin12345678'
+}
+request(server)
+    .post('/api/v1/auth/admin')
+    .send(user)
+    .end((err,res) => {
+        const { token } = res.body;
+        requestToken = token;
         done();
     })
 })
@@ -74,6 +93,30 @@ describe('/GET /api/v1/orders/:id', () => {
         });
     });
 });
+
+describe('/GET /api/v1/users/:id/orders', () => {
+    it('it should return 404 error, no order found', (done) => {
+    request(server)
+        .get('/api/v1/users/1/orders')
+        .set('x-access-token',smallToken)
+        .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return 404 error, user does not exist', (done) => {
+    request(server)
+        .get('/api/v1/users/20/orders')
+        .set('x-access-token',userToken)
+        .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+})
 
 describe('/POST /api/v1/orders', () => {
     it('it should place an order', (done) => {
@@ -296,6 +339,17 @@ describe('/POST /api/v1/orders', () => {
             done();
         });
     });
-
-
 });
+
+describe('/GET /api/v1/users/:id/orders', () => {
+    it('it should return all orders', (done) => {
+    request(server)
+        .get('/api/v1/users/2/orders')
+        .set('x-access-token',userToken)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+})
