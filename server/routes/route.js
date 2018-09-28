@@ -28,6 +28,7 @@ const Route = (app) => {
 
     app.get('/api/v1/orders/:id',
         tokendecode,
+        CheckUser.validateAdmin,
         Middleware.validateGetOneOrder,
         OrderHelper.helpAdminGetOneOrder,
         OrderHelper.helpGetOrderUser,
@@ -36,7 +37,11 @@ const Route = (app) => {
     );
 
     app.put('/api/v1/orders/:id',
+        tokendecode,
+        CheckUser.validateAdmin,
         Middleware.validateUpdateOrderStatus,
+        OrderHelper.helpAdminGetOneOrder,
+        OrderHelper.helpUpdateOrderStaus,
         orderControl.updateOrderStatus
     );
 

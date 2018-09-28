@@ -51,10 +51,10 @@ class orderControl {
 
     static updateOrderStatus(req,resp) {
         req.order.status = req.status;
-        return resp.send({
+        return resp.status(200).send({
             status: 'success',
             message: 'Order status has been changed',
-            order: req.order
+            order: req.orders
         });
     }
 }

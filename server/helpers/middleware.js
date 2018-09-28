@@ -46,17 +46,16 @@ class Middleware {
                 message: 'ID parameter must be a number'
             });
         }
-        req.order = order;
 
         next();
     }
 
     static validateUpdateOrderStatus (req,resp,next) {
         const status = req.body.status;
-        const statusArray = ['pending','accepted','rejected','completed'];
-        const order = orders.find(c => c.id == req.params.id);
-        if (!order) {
-            return resp.status(404).send({
+        const statusArray = ['new','processing','cancelled','complete'];
+        const order = req.params.id;
+        if (isNaN(order)) {
+            return resp.status(400).send({
                 status: 'error',
                 message: 'This order was not found on the list'
             });
@@ -79,7 +78,6 @@ class Middleware {
         }
         
         req.status = status;
-        req.order = order;
         
         next();
     }
