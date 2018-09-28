@@ -68,12 +68,7 @@ class MenuControl {
                 return resp.status(200).send({
                     status: 'success',
                     message: 'Returned one menu',
-                    menu: {
-                        id: menu.id,
-                        title: menu.title,
-                        price: menu.price,
-                        quantity: menu.quantity
-                    }
+                    menu: menu
                 })
             }
         )

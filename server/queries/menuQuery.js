@@ -28,7 +28,7 @@ class MenuQuery {
 
     static getOneMenuIDQuery(id) {
         return {
-            text: `SELECT * FROM menu WHERE id = $1 AND quantity > 0`,
+            text: `SELECT id,title,price,quantity FROM menu WHERE id = $1 AND quantity > 0`,
             values: [id]
         }
     }
