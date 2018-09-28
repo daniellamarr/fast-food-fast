@@ -50,6 +50,18 @@ class Middleware {
         next();
     }
 
+    static validateGetOneMenu (req,resp,next) {
+        const menu = req.params.id;
+        if (isNaN(menu)) {
+            return resp.status(400).send({
+                status: 'error',
+                message: 'ID parameter must be a number'
+            });
+        }
+
+        next();
+    }
+
     static validateUpdateOrderStatus (req,resp,next) {
         const status = req.body.status;
         const statusArray = ['new','processing','cancelled','complete'];

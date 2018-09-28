@@ -81,6 +81,11 @@ const Route = (app) => {
     app.get('/api/v1/menu',
         MenuControl.getAllMenu
     )
+
+    app.get('/api/v1/menu/:id',
+        Middleware.validateGetOneMenu,
+        MenuControl.getOneMenu
+    )
 }
 
 export default Route;
