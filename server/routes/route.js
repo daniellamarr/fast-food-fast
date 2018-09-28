@@ -27,7 +27,11 @@ const Route = (app) => {
     );
 
     app.get('/api/v1/orders/:id',
+        tokendecode,
         Middleware.validateGetOneOrder,
+        OrderHelper.helpAdminGetOneOrder,
+        OrderHelper.helpGetOrderUser,
+        OrderHelper.helpGetUserAndOrderItems,
         orderControl.getOneOrder
     );
 

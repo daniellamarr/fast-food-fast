@@ -51,6 +51,14 @@ class OrderQuery {
 			values: [item]
 		}
 	}
+
+	static getOneOrderQuery(orderid){
+		return {
+			text: `
+			SELECT * FROM orders WHERE id = $1`,
+			values: [orderid]
+		}
+	}
 }
 
 export default OrderQuery;

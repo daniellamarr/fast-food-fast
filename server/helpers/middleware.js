@@ -39,11 +39,11 @@ class Middleware {
     }
 
     static validateGetOneOrder (req,resp,next) {
-        const order = orders.find(c => c.id == req.params.id);
-        if (!order) {
-            return resp.status(404).send({
+        const order = req.params.id;
+        if (isNaN(order)) {
+            return resp.status(400).send({
                 status: 'error',
-                message: 'This order was not found on the list'
+                message: 'ID parameter must be a number'
             });
         }
         req.order = order;

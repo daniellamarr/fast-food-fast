@@ -74,19 +74,10 @@ describe('/GET /api/v1/orders', () => {
 });
 
 describe('/GET /api/v1/orders/:id', () => {
-    it('it should GET a specific order', (done) => {
+    it('it should return a 404 error, order not found', (done) => {
     request(server)
-        .get('/api/v1/orders/' + 1)
-        .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            done();
-        });
-    });
-
-    it('it should return a 404 error', (done) => {
-    request(server)
-        .get('/api/v1/orders/' + 3)
+        .get('/api/v1/orders/' + 10)
+        .set('x-access-token',requestToken)
         .end((err, res) => {
             res.should.have.status(404);
             res.body.should.be.a('object');
@@ -278,7 +269,7 @@ describe('/POST /api/v1/orders', () => {
     });
 });
 
-describe('/POST /api/v1/orders', () => {
+describe('/PUT /api/v1/orders', () => {
     it('it should update an order status', (done) => {
     const test_status = {
         status: "accepted"
@@ -359,6 +350,40 @@ describe('/GET /api/v1/orders', () => {
     it('it should GET all orders', (done) => {
     request(server)
         .get('/api/v1/orders')
+        .set('x-access-token',requestToken)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+
+describe('/GET /api/v1/orders/:id', () => {
+    it('it should return a 401 error status, no token provided', (done) => {
+    request(server)
+        .get('/api/v1/orders/' + 1)
+        .end((err, res) => {
+            res.should.have.status(401);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 400 error, id is not an integer', (done) => {
+    request(server)
+        .get('/api/v1/orders/1a')
+        .set('x-access-token',requestToken)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should get a specific order', (done) => {
+    request(server)
+        .get('/api/v1/orders/' + 1)
         .set('x-access-token',requestToken)
         .end((err, res) => {
             res.should.have.status(200);
