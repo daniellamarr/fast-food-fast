@@ -50,7 +50,7 @@ const createOrderItems = `
 CREATE TABLE orderitems (
     id serial PRIMARY KEY NOT NULL,
     itemid INT NOT NULL,
-    orderid INT NOT NULL,
+    orderid VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
     date_created TIMESTAMP DEFAULT Now()
 )

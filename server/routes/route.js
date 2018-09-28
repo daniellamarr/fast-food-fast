@@ -31,6 +31,14 @@ const Route = (app) => {
         orderControl.updateOrderStatus
     );
 
+    app.get('/api/v1/users/:id/orders',
+        tokendecode,
+        CheckUser.idVerification,
+        OrderHelper.helpGetUserOrders,
+        OrderHelper.helpGetOrderItems,
+        orderControl.getUserOrders
+    );
+
     app.post('/api/v1/auth/signup',
         CheckUser.validateUser,
         Middleware.validateUserSignup,

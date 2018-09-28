@@ -25,6 +25,24 @@ class OrderQuery {
 			values: [id,total]
 		}
 	}
+
+	static getUserOrderQuery(id){
+		return {
+			text: `
+			SELECT * FROM orders WHERE userid = $1
+			`,
+			values: [id]
+		}
+	}
+
+	static getUserItemsQuery(item){
+		return {
+			text: `
+			SELECT id,orderid,quantity FROM orderitems WHERE itemid = $1
+			`,
+			values: [item]
+		}
+	}
 }
 
 export default OrderQuery;

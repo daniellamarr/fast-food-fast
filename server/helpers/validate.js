@@ -2,12 +2,9 @@ class validate {
 	static hasWhiteSpace(str) {
 		return (!str || str.length === 0 || /^\s*$/.test(str))
 	}
-	static getSum(total, num) {
-		return total + num;
-	}
 	static sumPrices (price)
 	{
-		return price.reduce(this.getSum)
+		return price.reduce((total,num)=> total+num);
 	}
 	static validateEmail(email) {
 		const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -23,9 +20,6 @@ class validate {
 		}
 	}
 	static arrayContainsArray(superset, subset) {
-		if (0 === subset.length) {
-			return false;
-		}
 		return subset.every(function (value) {
 			return (superset.indexOf(value) >= 0);
 		});
