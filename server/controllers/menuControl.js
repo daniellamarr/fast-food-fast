@@ -30,13 +30,13 @@ class MenuControl {
             MenuQuery.getAllMenuQuery(),
             (err, res) => {
                 let all = [];
-                const menu = res.rows;
-                if (menu=="") {
+                if (res.rows.length < 1) {
                     return resp.status(404).send({
                         status: 'error',
                         message: 'No Menu Found'
                     })
                 }
+                const menu = res.rows;
                 menu.forEach(obj => {
                     all.push({
                         id: obj.id,
