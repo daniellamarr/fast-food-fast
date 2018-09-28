@@ -13,7 +13,8 @@ const Route = (app) => {
         tokendecode,
         CheckUser.validateAdmin,
         OrderHelper.helpAdminGetOrders,
-        OrderHelper.helpGetOrderItems,
+        OrderHelper.helpGetOrderUser,
+        OrderHelper.helpGetUserAndOrderItems,
         orderControl.getAllOrders
     );
 
