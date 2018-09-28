@@ -59,6 +59,14 @@ class OrderQuery {
 			values: [orderid]
 		}
 	}
+
+	static updateOrderStatus(orderid,status) {
+		return {
+			text: `
+			UPDATE orders SET status = $2, adminid = $3 WHERE id = $1 RETURNING *`,
+			values: [orderid,status,1]
+		}
+	}
 }
 
 export default OrderQuery;

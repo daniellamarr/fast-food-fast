@@ -202,6 +202,19 @@ class OrderHelper {
             next();
         });
     }
+    
+    static helpUpdateOrderStaus (req,resp,next) {
+        db.query(
+            OrderQuery.updateOrderStatus(req.params.id,req.status))
+        .then(res => {
+            const [ stat ] = res.rows;
+            req.orders = {
+                id: stat.id,
+                status: stat.status
+            }
+            next();
+        })
+    }
 }
 
 

@@ -272,10 +272,11 @@ describe('/POST /api/v1/orders', () => {
 describe('/PUT /api/v1/orders', () => {
     it('it should update an order status', (done) => {
     const test_status = {
-        status: "accepted"
+        status: "processing"
     }
     request(server)
         .put('/api/v1/orders/' + 1)
+        .set('x-access-token',requestToken)
         .send(test_status)
         .end((err, res) => {
             res.should.have.status(200);
@@ -287,6 +288,7 @@ describe('/PUT /api/v1/orders', () => {
     it('it should return a 400 status error when status field is empty or null', (done) => {
     request(server)
         .put('/api/v1/orders/' + 1)
+        .set('x-access-token',requestToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -301,6 +303,7 @@ describe('/PUT /api/v1/orders', () => {
     request(server)
         .put('/api/v1/orders/' + 1)
         .send(test_status)
+        .set('x-access-token',requestToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -315,6 +318,22 @@ describe('/PUT /api/v1/orders', () => {
     request(server)
         .put('/api/v1/orders/' + 1)
         .send(test_status)
+        .set('x-access-token',requestToken)
+        .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 400 error if id is not an integer', (done) => {
+    const test_status = {
+        status: "complete"
+    }
+    request(server)
+        .put('/api/v1/orders/fdsaaa')
+        .send(test_status)
+        .set('x-access-token',requestToken)
         .end((err, res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');
@@ -323,10 +342,29 @@ describe('/PUT /api/v1/orders', () => {
     });
 
     it('it should return a 404 error if id does not exist', (done) => {
+    const test_status = {
+        status: "complete"
+    }
     request(server)
-        .put('/api/v1/orders/ryiy8iby')
+        .put('/api/v1/orders/10')
+        .send(test_status)
+        .set('x-access-token',requestToken)
         .end((err, res) => {
             res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+
+    it('it should return a 401 status error when token is invalid', (done) => {
+    const test_status = {
+        status: "cancelled"
+    }
+    request(server)
+        .put('/api/v1/orders/' + 1)
+        .send(test_status)
+        .end((err, res) => {
+            res.should.have.status(401);
             res.body.should.be.a('object');
             done();
         });
