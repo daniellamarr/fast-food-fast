@@ -61,11 +61,12 @@ request(server)
 })
 
 describe('/GET /api/v1/orders', () => {
-    it('it should GET all orders', (done) => {
+    it('it should return a 404 error, orders not found', (done) => {
     request(server)
         .get('/api/v1/orders')
+        .set('x-access-token',requestToken)
         .end((err, res) => {
-            res.should.have.status(200);
+            res.should.have.status(404);
             res.body.should.be.a('object');
             done();
         });
@@ -353,3 +354,16 @@ describe('/GET /api/v1/users/:id/orders', () => {
         });
     });
 })
+
+describe('/GET /api/v1/orders', () => {
+    it('it should GET all orders', (done) => {
+    request(server)
+        .get('/api/v1/orders')
+        .set('x-access-token',requestToken)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
