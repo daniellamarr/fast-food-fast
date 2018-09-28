@@ -29,7 +29,7 @@ class orderControl {
         return resp.send({
             status: 'success',
             message: 'Returning all orders',
-            orders: orders
+            orders: req.orders
         });
     }
 

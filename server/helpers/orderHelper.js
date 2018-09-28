@@ -2,6 +2,7 @@ import validate from "./validate";
 import db from "../db";
 import MenuQuery from "../queries/menuQuery";
 import OrderQuery from "../queries/orderQuery";
+import UserQuery from "../queries/userQuery";
 
 class OrderHelper {
     static helpPlaceOrder (req,resp,next) {
@@ -71,6 +72,24 @@ class OrderHelper {
         })
     }
 
+    static helpAdminGetOrders (req,resp,next) {
+        db.query(
+            OrderQuery.getAllOrdersQuery())
+        .then(res => {
+            const order = res.rows;
+
+            if (order=="" || order==null) {
+                return resp.status(404).send({
+                    status: 'error',
+                    message: 'No order found'
+                })
+            }else{
+                req.order = order;
+                next();
+            }
+        })
+    }
+
     static helpGetUserOrders (req,resp,next) {
         db.query(
             OrderQuery.getUserOrderQuery(req.id))
@@ -87,6 +106,58 @@ class OrderHelper {
                 next();
             }
         })
+    }
+
+    static helpGetOrderUser (req,resp,next) {
+        const order = req.order;
+        let queries = [];
+        let user = [];
+        order.forEach(obj => {
+            const query = db.query(
+                UserQuery.checkUserIDQuery(obj.userid))
+            .then(res_ => {
+                const userr = res_.rows;
+                for (let i = 0; i < userr.length; i++) {
+                   user.push({
+                       name: userr[i].name,
+                       email: userr[i].email,
+                       phone: userr[i].phone
+                   })
+                }
+            })
+            queries.push(query);
+        });
+        Promise.all(queries).then(() => {
+            req.user = user;
+            next();
+        });
+    }
+
+    static helpGetUserAndOrderItems (req,resp,next) {
+        const order = req.order;
+        const user = req.user;
+        let queries = [];
+        let items = [];
+        for (let i = 0; i < order.length; i++){
+            const query = db.query(
+                OrderQuery.getUserItemsQuery(order[i].id))
+            .then(res_ => {
+                const item = res_.rows;
+                
+                items.push({
+                    id: order[i].id,
+                    price: order[i].amount,
+                    status: order[i].status,
+                    food: item,
+                    user: user[i]
+                });
+            })
+            queries.push(query);
+        };
+        Promise.all(queries).then(() => {
+            req.orders = items;
+            next();
+        });
     }
 
     static helpGetOrderItems (req,resp,next) {

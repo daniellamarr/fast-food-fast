@@ -10,6 +10,11 @@ import OrderHelper from "../helpers/orderHelper";
 const Route = (app) => {
     app.get(
         '/api/v1/orders',
+        tokendecode,
+        CheckUser.validateAdmin,
+        OrderHelper.helpAdminGetOrders,
+        OrderHelper.helpGetOrderUser,
+        OrderHelper.helpGetUserAndOrderItems,
         orderControl.getAllOrders
     );
 
