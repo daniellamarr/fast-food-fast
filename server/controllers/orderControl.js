@@ -37,7 +37,7 @@ class orderControl {
         return resp.send({
             status: 'success',
             message: 'Returned one order',
-            order: req.order
+            order: req.orders
         });
     }
 
