@@ -1,11 +1,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 import Route from './routes/route';
 
 const app = express();
 
+const swaggerDocument = YAML.load(`${process.cwd()}/swagger.yaml`);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 Route(app);
 

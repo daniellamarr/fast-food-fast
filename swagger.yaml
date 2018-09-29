@@ -1,0 +1,335 @@
+"swagger": "2.0"
+info:
+  description: "Fast food fast is a food delivery service app for a restaurant that allows users sign up, login and make requests for food."
+  version: "1.0.0"
+  title: "Fast-Food-Fast"
+  contact: 
+    email: "danielchidiebele@gmail.com"
+host: "daniellamarr-fast-food-fast.herokuapp.com"
+basePath: "/"
+schemes:
+- "https"
+- "http"
+paths:
+  /api/v1/menu:
+    get:
+      tags:
+      - "Menu"
+      summary: "Get all Menu"
+      description: "Returns an object of all menu in the database."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+        404:
+          description: "No menu found"
+          schema:
+            $ref: "#/definitions/Menu"
+    post:
+      tags:
+      - "Menu"
+      summary: "Add a new menu"
+      description: "Admin adds a new menu to the database."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "title"
+        description: "The name of the menu to be added"
+        required: true
+      - in: "query"
+        name: "quantity"
+        description: "The quantity of the menu to be added"
+        required: true
+      - in: "query"
+        name: "price"
+        description: "The price of the menu to be added"
+        required: true
+      responses:
+        201:
+          description: "Success"
+        401:
+          description: "No token provided"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Menu"
+  /api/v1/menu/:id:
+    get:
+      tags:
+      - "Menu"
+      summary: "Get a single menu"
+      description: "Returns an object containing details of a particular menu"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "id"
+        description: "The menu ID to be returned"
+        required: true
+      responses:
+        200:
+          description: "Menu Details"
+        404:
+          description: "Menu not found"
+          schema:
+            $ref: "#/definitions/Menu"
+  /api/v1/orders:
+    get:
+      tags:
+      - "Orders"
+      summary: "Gets all orders"
+      description: "Returns an object containing all orders that has been placed on the app by users. Only an admin has permission to view orders"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Returned all orders"
+        401:
+          description: "No token provided"
+        404:
+          description: "No Orders Found"
+          schema:
+            $ref: "#/definitions/Orders"
+    post:
+      tags:
+      - "Orders"
+      summary: "Places an order"
+      description: "Places an order on the app. Only registered users have access to this route, a token is required for authentication process"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "order"
+        description: "The food a user wants to get, must match food items on the menu."
+        required: true
+      - in: "query"
+        name: "quantity"
+        description: "The quantity of food a user needs."
+        required: true
+      responses:
+        201:
+          description: "Places an order"
+        400:
+          description: "Bad Request"
+        401:
+          description: "No token provided"
+  /api/v1/orders/:id:
+    get:
+      tags:
+      - "Orders"
+      summary: "Get a single order"
+      description: "Returns an object of a single order on the app. Only an admin has permission to this route"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "id"
+        description: "The order ID to be returned"
+        required: true
+      responses:
+        200:
+          description: "Returned one order"
+        400:
+          description: "Bad Request"
+        401:
+          description: "No token provided"
+        404:
+          description: "Order not found"
+          schema:
+            $ref: "#/definitions/Orders"
+    put:
+      tags:
+      - "Orders"
+      summary: "Update an order status"
+      description: "Update the status of an order. Only an admin has permission to this route"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "id"
+        description: "The order ID to be updated"
+        required: true
+      - in: "query"
+        name: "status"
+        description: "The status to be updated. Must be one of [new,processing,cancelled,complete]"
+        required: true
+      responses:
+        200:
+          description: "Update successful"
+        400:
+          description: "Bad Request"
+        401:
+          description: "No token provided"
+        404:
+          description: "Order not found"
+  /api/v1/users/:id/orders:
+    get:
+      tags:
+      - "Orders"
+      summary: "Gets all orders of a single user"
+      description: "Returns an object of all orders of a single user on the app. Only a user has permission to this route"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "id"
+        description: "The ID of the user"
+        required: true
+      responses:
+        200:
+          description: "Returned orders"
+        400:
+          description: "Bad Request"
+        401:
+          description: "No token provided"
+        404:
+          description: "Orders not found"
+          schema:
+            $ref: "#/definitions/Orders"
+  /api/v1/auth/signup:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Creates a new user"
+      description: "A new user is created and a token is given to be able to access user protected routes"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "The name for signup"
+        required: true
+        type: "string"
+      - name: "email"
+        in: "query"
+        description: "The email for signup"
+        required: true
+        type: "string"
+      - name: "phone"
+        in: "query"
+        description: "The phone number for signup"
+        required: true
+        type: "number"
+      - name: "address"
+        in: "query"
+        description: "The address of user for food delivery"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login"
+        required: true
+        type: "string"
+      - name: "cpassword"
+        in: "query"
+        description: "string must match password to confirm user password"
+        required: true
+        type: "string"
+      responses:
+        201:
+          description: "signup successful"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/User"
+  /api/v1/auth/login:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Logs in an existing user"
+      description: "The logged in user gets a token to be able to access user protected routes "
+      produces:
+      - "application/json"
+      parameters:
+      - name: "email"
+        in: "query"
+        description: "The email for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Login successful"
+        401:
+          description: "Incorrect email or password"
+          schema:
+            $ref: "#/definitions/User"
+  /api/v1/auth/admin:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Logs in an admin"
+      description: "The logged in admin gets a token to be able to access admin protected routes "
+      produces:
+      - "application/json"
+      parameters:
+      - name: "email"
+        in: "query"
+        description: "The email for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Login successful"
+        401:
+          description: "Incorrect email or password"
+securityDefinitions:
+  api_key:
+    name: "token"
+    in: "header"
+definitions:
+  Orders:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      userid:
+        type: "integer"
+      amount:
+        type: "number"
+      status:
+        type: "string"
+      date_created:
+        type: "date"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      address:
+        type: "string"
+      password:
+        type: "string"
+      date_created:
+        type: "date"
+  Menu:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      title:
+        type: "string"
+      quantity:
+        type: "string"
+      price:
+        type: "number"
+      date_created:
+        type: "date"
+
