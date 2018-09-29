@@ -25,10 +25,17 @@ Npm v5.6 or above
 
 ### ENDPOINTS
 
-- GET **/api/v1/orders** Get all orders on the platform
-- GET **/api/orders/:id** Get a specific order based on the id passed
-- POST **/api/v1/orders** Place a new order
-- PUT **/api/v1/orders** Update the status of an order
+- GET **/api/v1/orders** Admin can get all orders on the platform
+- GET **/api/orders/:id** Admin can get a specific order based on the id passed
+- POST **/api/v1/orders** Users can place a new order
+- PUT **/api/v1/orders** Admin can update the status of an order
+- GET **/api/v1/users/:id/orders** Gets all orders of a single user
+- POST **/api/v1/auth/signup** Signs up a user on the app
+- POST **/api/v1/auth/login** Logs in an existing user on the app
+- POST **/api/v1/auth/admin** Logs in an admin on the app
+- GET **/api/v1/menu** Gets all available menu on the app
+- GET **/api/v1/menu/:id** Gets a single menu on the app
+- POST **/api/v1/menu** Admin can add a new menu on the app
 
 ### Installing
 
@@ -72,3 +79,4 @@ Run `npm test` in the terminal for the cloned folder.
 * [medium.freecodecamp.org](https://medium.freecodecamp.org)
 * The Andela Team
 * [google.com](https://google.com)
+* Andela 21 Colleagues

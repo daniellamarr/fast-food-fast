@@ -13,7 +13,7 @@ class MenuControl {
                 const [menu] = res.rows;
                 return resp.status(201).send({
                     status: 'success',
-                    message: 'New Meal Inserted',
+                    message: 'Menu Created',
                     menu: {
                         id: menu.id,
                         title: menu.title,
