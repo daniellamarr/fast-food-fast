@@ -1,5 +1,5 @@
 class MenuQuery {
-    static addMenuQuery (title,quantity,price,adminid) {
+    static addMenuQuery (title,quantity,price,adminid,image) {
         return {
             text: `
             INSERT INTO menu
@@ -7,10 +7,11 @@ class MenuQuery {
                 title,
                 quantity,
                 price,
-                adminid
+                adminid,
+                image_path
             )
-            VALUES ($1, $2, $3, $4) RETURNING *`,
-            values: [title,quantity,price,adminid]
+            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            values: [title,quantity,price,adminid,image]
         }
     }
     static getAllMenuQuery() {

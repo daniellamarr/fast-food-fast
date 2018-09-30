@@ -29,7 +29,7 @@ CREATE TABLE menu (
     title VARCHAR(50) NOT NULL,
     quantity NUMERIC(15) NOT NULL,
     price NUMERIC(15) NOT NULL,
-    image_path VARCHAR(50),
+    image_path VARCHAR(100),
     adminid INT,
     date_created TIMESTAMP DEFAULT Now()
 )

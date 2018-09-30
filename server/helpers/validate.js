@@ -24,6 +24,9 @@ class validate {
 			return (superset.indexOf(value) >= 0);
 		});
 	}
+	static retSubstr () {
+		return Math.floor(Math.random() * 100000) + 10000;
+	}
 }
 
 export default validate;

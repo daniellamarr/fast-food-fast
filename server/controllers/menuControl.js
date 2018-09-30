@@ -6,9 +6,10 @@ class MenuControl {
         const title = req.body.title;
         const quantity = req.body.quantity;
         const price = req.body.price;
+        const image = req.file.filename;
         
         db.query(
-            MenuQuery.addMenuQuery(title,quantity,price,req.tokenId),
+            MenuQuery.addMenuQuery(title,quantity,price,req.tokenId,image),
             (err,res) => {
                 const [menu] = res.rows;
                 return resp.status(201).send({
@@ -18,7 +19,8 @@ class MenuControl {
                         id: menu.id,
                         title: menu.title,
                         price: menu.price,
-                        admin: menu.adminid
+                        admin: menu.adminid,
+                        image: menu.image_path
                     }
                 })
             }

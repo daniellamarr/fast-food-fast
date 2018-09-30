@@ -241,6 +241,7 @@ class Middleware {
         const title = req.body.title;
         const quantity = req.body.quantity;
         const price = req.body.price;
+        const menuImage = req.body.menuImage;
 
         if (title==null
             || title.length===0
@@ -294,6 +295,18 @@ class Middleware {
             return resp.status(400).send({
                 status: "error",
                 message: 'Price cannot be a string character'
+            })
+        }
+        if (req.file == undefined) {
+            return resp.status(400).send({
+                status: "error",
+                message: 'There was an error parsing your image'
+            })
+        }
+        if (req.error === 'image') {
+            return resp.status(400).send({
+                status: "error",
+                message: 'There was an error parsing your image'
             })
         }
 
