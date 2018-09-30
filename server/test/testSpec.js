@@ -89,7 +89,7 @@ describe('/GET /api/v1/orders/:id', () => {
 describe('/GET /api/v1/users/:id/orders', () => {
     it('it should return 404 error, no order found', (done) => {
     request(server)
-        .get('/api/v1/users/1/orders')
+        .get('/api/v1/users/3/orders')
         .set('x-access-token',smallToken)
         .end((err, res) => {
             res.should.have.status(404);
