@@ -10,6 +10,7 @@ const app = express();
 const swaggerDocument = YAML.load(`${process.cwd()}/swagger.yaml`);
 
 app.use(bodyParser.json());
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());

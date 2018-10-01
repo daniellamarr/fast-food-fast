@@ -31,7 +31,8 @@ class UserControl {
         resp.status(200).send({
             status: "success",
             message: 'Login successful',
-            token: req.token
+            token: req.token,
+            user: req.user
         })
     }
 }

@@ -76,8 +76,16 @@ class CheckUser {
                         expiresIn: 86400
                     });
 
+                    const users = {
+                        name: user.name,
+                        email: user.email,
+                        phone: user.phone,
+                        address: user.address
+                    }
+
                     req.token = token;
-                    req.email = req.body.email
+                    req.email = req.body.email;
+                    req.user = users;
 
                     next();
                 }

@@ -45,6 +45,7 @@ class MenuControl {
                         title:obj.title,
                         price:obj.price,
                         quantity:obj.quantity,
+                        image:obj.image_path
                     })
                 });
                 return resp.status(200).send({
