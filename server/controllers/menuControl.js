@@ -35,7 +35,7 @@ class MenuControl {
                 if (res.rows.length < 1) {
                     return resp.status(404).send({
                         status: 'error',
-                        message: 'No Menu Found'
+                        message: 'No Menu Found '
                     })
                 }
                 const menu = res.rows;
