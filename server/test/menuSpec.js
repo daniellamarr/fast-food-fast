@@ -60,13 +60,16 @@ describe('/GET /api/v1/menu', () => {
 
 describe('/POST /api/v1/menu', () => {
     it('it should add a new menu', (done) => {
+    const menu = {
+        title: 'Beans',
+        quantity: '10',
+        price: '1000',
+        image_url: 'https://fastfoodfast.com/image_url'
+    }
     request(server)
         .post('/api/v1/menu')
         .set('x-access-token',requestToken)
-        .field('title','Beans')
-        .field('quantity', '10')
-        .field('price','1000')
-        .attach('menuImage','./uploads/Rice.jpeg')
+        .send(menu)
         .end((err,res) => {
             res.should.have.status(201);
             res.body.should.be.a('object');
@@ -74,28 +77,16 @@ describe('/POST /api/v1/menu', () => {
         })
     })
 
-    it('it should return a 400 error, image not added', (done) => {
+    it('it should return a 400 error, image url not added', (done) => {
+    const menu = {
+        title: 'Beans',
+        quantity: '10',
+        price: '1000',
+    }
     request(server)
         .post('/api/v1/menu')
         .set('x-access-token',requestToken)
-        .field('title','Beans')
-        .field('quantity', '10')
-        .field('price','1000')
-        .end((err,res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            done();
-        })
-    })
-
-    it('it should return a 400 error, file is not an image', (done) => {
-    request(server)
-        .post('/api/v1/menu')
-        .set('x-access-token',requestToken)
-        .field('title','Beans')
-        .field('quantity', '10')
-        .field('price','1000')
-        .attach('menuImage','./uploads/Jaldi-Bold.ttf')
+        .send(menu)
         .end((err,res) => {
             res.should.have.status(400);
             res.body.should.be.a('object');

@@ -6,7 +6,6 @@ import CheckUser from "../helpers/checkUser";
 import tokendecode from "../jwt/tokendecode";
 import MenuControl from "../controllers/menuControl";
 import OrderHelper from "../helpers/orderHelper";
-import upload from "../helpers/imageupload";
 
 const Route = (app) => {
     app.get(
@@ -75,7 +74,6 @@ const Route = (app) => {
     app.post('/api/v1/menu',
         tokendecode,
         CheckUser.validateAdmin,
-        upload.single('menuImage'),
         Middleware.validateAddMenu,
         MenuControl.addMenu
     );

@@ -6,7 +6,7 @@ class MenuControl {
         const title = req.body.title;
         const quantity = req.body.quantity;
         const price = req.body.price;
-        const image = req.file.filename;
+        const image = req.body.image_url;
         
         db.query(
             MenuQuery.addMenuQuery(title,quantity,price,req.tokenId,image),

@@ -241,7 +241,7 @@ class Middleware {
         const title = req.body.title;
         const quantity = req.body.quantity;
         const price = req.body.price;
-        const menuImage = req.body.menuImage;
+        const image_url = req.body.image_url;
 
         if (title==null
             || title.length===0
@@ -297,16 +297,12 @@ class Middleware {
                 message: 'Price cannot be a string character'
             })
         }
-        if (req.file == undefined) {
+        if (image_url==null
+            || image_url.length===0
+            || validate.hasWhiteSpace(price)) {
             return resp.status(400).send({
                 status: "error",
-                message: 'There was an error parsing your image'
-            })
-        }
-        if (req.error === 'image') {
-            return resp.status(400).send({
-                status: "error",
-                message: 'There was an error parsing your image'
+                message: 'Please pass in an image url'
             })
         }
 
