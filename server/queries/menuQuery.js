@@ -16,7 +16,7 @@ class MenuQuery {
     }
     static getAllMenuQuery() {
         return {
-            text: `SELECT * FROM menu WHERE quantity > 0`
+            text: `SELECT * FROM menu WHERE quantity > 0 ORDER BY id DESC`
         }
     }
 
@@ -29,7 +29,8 @@ class MenuQuery {
 
     static getOneMenuIDQuery(id) {
         return {
-            text: `SELECT id,title,price,quantity,image_path FROM menu WHERE id = $1 AND quantity > 0`,
+            text: `SELECT id,title,price,quantity,image_path
+            FROM menu WHERE id = $1 AND quantity > 0`,
             values: [id]
         }
     }
