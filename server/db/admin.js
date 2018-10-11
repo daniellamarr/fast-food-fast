@@ -9,6 +9,10 @@ const email = process.env.ADMINEMAIL;
 const phone  = process.env.ADMINPHONE;
 const password = bcrypt.hashSync(process.env.ADMINPASS);
 
+const confirmTables = `
+SELECT * FROM admin
+`;
+
 const adminData = {
     text: `
     INSERT INTO admin (
@@ -20,13 +24,19 @@ const adminData = {
     values: [fullname,email,phone,password]
 };
 
-db.query(
-    adminData,
-    (err,res) => {
-        if (err) {
-            throw err
-        }else{
-            console.log('Admin Created');
-        };
-    }
-);
+db.query(confirmTables)
+.then(res => {
+    console.log('Admin exists');
+})
+.catch(err => {
+    db.query(
+        adminData,
+        (err,res) => {
+            if (err) {
+                throw err
+            }else{
+                console.log('Admin Created');
+            };
+        }
+    );
+})

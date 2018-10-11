@@ -1,5 +1,9 @@
 import db from "./index";
 
+const confirmTables = `
+SELECT * FROM users,admin,menu,orders,orderitems
+`;
+
 const createUsers = `
 CREATE TABLE users (
     id serial PRIMARY KEY NOT NULL,
@@ -56,57 +60,63 @@ CREATE TABLE orderitems (
 )
 `;
 
-db.query(
-    createUsers,
-    (err,res) => {
-        if (err) {
-            throw err
-        }else{
-            console.log('Users Table Added');
-        };
-    }
-);
+db.query(confirmTables)
+.then(res => {
+    console.log('Tables exist');
+})
+.catch(err => {
+    db.query(
+        createUsers,
+        (err,res) => {
+            if (err) {
+                throw err
+            }else{
+                console.log('Users Table Added');
+            };
+        }
+    );
 
-db.query(
-    createAdmin,
-    (err,res) => {
-        if (err) {
-            throw err
-        }else{
-            console.log('Admin Table Added');
-        };
-    }
-);
+    db.query(
+        createAdmin,
+        (err,res) => {
+            if (err) {
+                throw err
+            }else{
+                console.log('Admin Table Added');
+            };
+        }
+    );
 
-db.query(
-    createMenu,
-    (err,res) => {
-        if (err) {
-            throw err
-        }else{
-            console.log('Menu Table Added');
-        };
-    }
-);
+    db.query(
+        createMenu,
+        (err,res) => {
+            if (err) {
+                throw err
+            }else{
+                console.log('Menu Table Added');
+            };
+        }
+    );
 
-db.query(
-    createOrders,
-    (err,res) => {
-        if (err) {
-            throw err
-        }else{
-            console.log('Orders Table Added');
-        };
-    }
-);
+    db.query(
+        createOrders,
+        (err,res) => {
+            if (err) {
+                throw err
+            }else{
+                console.log('Orders Table Added');
+            };
+        }
+    );
 
-db.query(
-    createOrderItems,
-    (err,res) => {
-        if (err) {
-            throw err
-        }else{
-            console.log('Order Items Table Added');
-        };
-    }
-);
+    db.query(
+        createOrderItems,
+        (err,res) => {
+            if (err) {
+                throw err
+            }else{
+                console.log('Order Items Table Added');
+            };
+        }
+    );
+})
