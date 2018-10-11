@@ -31,7 +31,7 @@ REFERENCES admin (id) ON DELETE CASCADE;
 
 db.query(confirmTables)
 .then(res => {
-    if (res.rows.length < 1) {
+    if (res.rows.length > 0) {
         console.log('Keys exist');
     }else{
         db.query(
