@@ -10,7 +10,7 @@ const phone  = process.env.ADMINPHONE;
 const password = bcrypt.hashSync(process.env.ADMINPASS);
 
 const confirmTables = `
-SELECT * FROM admin
+SELECT * FROM admin WHERE id = 1
 `;
 
 const adminData = {
@@ -26,17 +26,18 @@ const adminData = {
 
 db.query(confirmTables)
 .then(res => {
-    console.log('Admin exists');
-})
-.catch(err => {
-    db.query(
-        adminData,
-        (err,res) => {
-            if (err) {
-                throw err
-            }else{
-                console.log('Admin Created');
-            };
-        }
-    );
+    if (res.rows.length > 0) {
+        console.log('Admin exists');
+    }else{
+        db.query(
+            adminData,
+            (err,res) => {
+                if (err) {
+                    throw err
+                }else{
+                    console.log('Admin Created');
+                };
+            }
+        );
+    }
 })

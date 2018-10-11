@@ -9,7 +9,7 @@
     "pretest": "npm run migrate",
     "lint": "eslint --fix-dry-run ./server/index.js ./server/controllers/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "migrate": "npm run dbdrop",
+    "migrate": "npm run dbdrop && npm run dbcreate && npm run dbkey && npm run dbadmin",
     "dbcreate": "babel-node ./server/db/setup.js",
     "dbdrop": "babel-node ./server/db/drop.js",
     "dbkey": "babel-node ./server/db/foreignKey.js",
