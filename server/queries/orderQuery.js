@@ -29,7 +29,7 @@ class OrderQuery {
 	static getUserOrderQuery(id){
 		return {
 			text: `
-			SELECT * FROM orders WHERE userid = $1 ORDER BY id DESC
+			SELECT * FROM orders WHERE userid = $1 ORDER BY orders.id DESC
 			`,
 			values: [id]
 		}
@@ -38,7 +38,7 @@ class OrderQuery {
 	static getAllOrdersQuery(){
 		return {
 			text: `
-			SELECT * FROM orders ORDER BY id DESC
+			SELECT * FROM orders ORDER BY orders.id DESC
 			`,
 		}
 	}
